@@ -1,0 +1,287 @@
+{
+  "meta": {
+    "title": "SHARAF — Developer / Builder",
+    "description": "Websites, web apps and CRMs, built in Morocco."
+  },
+  "hero": {
+    "kicker": "Developer / Builder",
+    "year": "2026",
+    "name": "SHARAF",
+    "portraitAlt": "Ink portrait",
+    "note": "ok, scroll and rip it",
+    "behind": "Websites",
+    "polaroids": [
+      {
+        "caption": "Hanabaly ✓ real",
+        "alt": "Screenshot placeholder: Hanabaly"
+      },
+      {
+        "caption": "booking engine",
+        "alt": "Screenshot placeholder: Booking / WhatsApp engine"
+      },
+      {
+        "caption": "car rental CRM",
+        "alt": "Screenshot placeholder: Car rental CRM"
+      }
+    ]
+  },
+  "timeline": {
+    "navLabel": "Chapters and scroll position",
+    "home": "Back to top",
+    "scrollPosition": "Scroll position",
+    "goTo": "Go to {chapter}",
+    "bookCall": "Book a call",
+    "chapters": [
+      {
+        "id": "hero",
+        "label": "Hero"
+      },
+      {
+        "id": "work",
+        "label": "Work"
+      },
+      {
+        "id": "services",
+        "label": "Services"
+      },
+      {
+        "id": "about",
+        "label": "About"
+      },
+      {
+        "id": "lab",
+        "label": "Lab"
+      },
+      {
+        "id": "contact",
+        "label": "Contact"
+      }
+    ],
+    "soundOn": "Turn sound off",
+    "soundOff": "Turn sound on"
+  },
+  "work": {
+    "label": "02 — Selected work",
+    "openProject": "Open project →",
+    "fullScreen": "full screen ↗",
+    "playing": "▶ Playing",
+    "videoPlaceholder": "IMG · video loop",
+    "details": {
+      "type": "Type",
+      "for": "For",
+      "stack": "Stack",
+      "year": "Year"
+    },
+    "projects": [
+      {
+        "name": "Restaurant site",
+        "kind": "Concept",
+        "year": "[YEAR]",
+        "sentence": "[ONE SENTENCE]",
+        "type": "Website · concept",
+        "for": "Restaurants",
+        "stack": "[STACK]"
+      },
+      {
+        "name": "Hanabaly",
+        "kind": "Real client",
+        "year": "[YEAR]",
+        "sentence": "An appointment platform for doctors and psychologists.",
+        "type": "Web app · real client",
+        "for": "Doctors, psychologists",
+        "stack": "[STACK]"
+      },
+      {
+        "name": "Booking engine",
+        "kind": "Concept",
+        "year": "[YEAR]",
+        "sentence": "Customers book on the site or by WhatsApp. Reminders go out on their own.",
+        "type": "Web app · concept",
+        "for": "Clinics, salons, gyms",
+        "stack": "[STACK]"
+      },
+      {
+        "name": "Car rental CRM",
+        "kind": "Concept",
+        "year": "[YEAR]",
+        "sentence": "[ONE SENTENCE]",
+        "type": "CRM · concept",
+        "for": "Car rental agencies",
+        "stack": "[STACK]"
+      },
+      {
+        "name": "Your project",
+        "kind": "Next?",
+        "year": "[YEAR]",
+        "sentence": "[ONE SENTENCE]",
+        "type": "[TYPE]",
+        "for": "You",
+        "stack": "[STACK]",
+        "cta": "your site here →"
+      }
+    ]
+  },
+  "services": {
+    "label": "03 — Services",
+    "title": "Build your brief.",
+    "steps": {
+      "need": "1 · What do you need?",
+      "addons": "2 · Add-ons",
+      "budget": "3 · Your budget",
+      "time": "4 · When do you need it?"
+    },
+    "needs": [
+      {
+        "id": "website",
+        "label": "Website",
+        "phrase": "a website"
+      },
+      {
+        "id": "webapp",
+        "label": "Web app",
+        "phrase": "a web app"
+      },
+      {
+        "id": "crm",
+        "label": "CRM",
+        "phrase": "a CRM"
+      },
+      {
+        "id": "automation",
+        "label": "Automation",
+        "phrase": "an automation"
+      }
+    ],
+    "addons": [
+      {
+        "id": "lang",
+        "name": "Extra language",
+        "desc": "French / Arabic version",
+        "phrase": "extra language"
+      },
+      {
+        "id": "booking",
+        "name": "Booking system",
+        "desc": "Customers book online",
+        "phrase": "booking system"
+      },
+      {
+        "id": "wa",
+        "name": "WhatsApp automation",
+        "desc": "Reminders + replies",
+        "phrase": "WhatsApp automation"
+      },
+      {
+        "id": "cms",
+        "name": "Edit it yourself (CMS)",
+        "desc": "Simple admin for texts",
+        "phrase": "a CMS to edit it myself"
+      },
+      {
+        "id": "seo",
+        "name": "SEO setup",
+        "desc": "Google-ready from day one",
+        "phrase": "SEO setup"
+      },
+      {
+        "id": "care",
+        "name": "Monthly care",
+        "desc": "Hosting, updates, fixes",
+        "phrase": "monthly care"
+      }
+    ],
+    "currencyIn": "In:",
+    "currencyLabel": "Currency",
+    "detected": "auto-detected: {country}",
+    "notSure": "Not sure yet",
+    "times": [
+      "ASAP",
+      "1–2 months",
+      "No rush"
+    ],
+    "currencies": {
+      "MAD": "Dirham",
+      "XOF": "CFA franc",
+      "EUR": "Euro",
+      "GBP": "Pound",
+      "CHF": "Swiss franc",
+      "CAD": "Canadian dollar",
+      "USD": "US dollar",
+      "AED": "UAE dirham",
+      "SAR": "Saudi riyal",
+      "QAR": "Qatari riyal",
+      "KWD": "Kuwaiti dinar"
+    },
+    "countries": {
+      "MA": "Morocco",
+      "SN": "Senegal",
+      "CI": "Côte d’Ivoire",
+      "PT": "Portugal",
+      "ES": "Spain",
+      "IT": "Italy",
+      "FR": "France",
+      "BE": "Belgium",
+      "DE": "Germany",
+      "NL": "Netherlands",
+      "IE": "Ireland",
+      "GB": "United Kingdom",
+      "CA": "Canada",
+      "AE": "United Arab Emirates",
+      "SA": "Saudi Arabia",
+      "QA": "Qatar",
+      "KW": "Kuwait",
+      "US": "United States",
+      "CH": "Switzerland",
+      "LU": "Luxembourg",
+      "OTHER": "another country"
+    },
+    "receipt": {
+      "header": "{name} · Project brief",
+      "budget": "Budget",
+      "timeline": "Timeline",
+      "send": "Send on WhatsApp",
+      "footer": "I reply with a quote that fits your budget",
+      "startLine": "Projects usually start around [X]"
+    }
+  },
+  "about": {
+    "label": "04 — About & process",
+    "title": "Access card.",
+    "cardTitle": "Dev access",
+    "role": "Web developer · Morocco · EN/FR/AR",
+    "photo": "[PHOTO]",
+    "photoAlt": "[PHOTO ALT]",
+    "slide": "Slide to flip →",
+    "flipLabel": "Flip the card",
+    "front": "Front of card",
+    "back": "Back of card",
+    "details": [
+      {
+        "k": "Experience",
+        "v": "[YEARS]"
+      },
+      {
+        "k": "Real client",
+        "v": "Hanabaly"
+      },
+      {
+        "k": "Stack",
+        "v": "Next.js / React / GSAP"
+      },
+      {
+        "k": "Studies",
+        "v": "[SCHOOL]"
+      }
+    ],
+    "qrLabel": "Scan to chat on WhatsApp",
+    "steps": [
+      "Call",
+      "Design",
+      "Build",
+      "Launch"
+    ],
+    "request": "Request access",
+    "requestMessage": "Hi! I'd like to request access 👋 (from your portfolio)",
+    "flipBack": "↻ flip back"
+  }
+}
