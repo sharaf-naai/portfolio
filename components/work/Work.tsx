@@ -3,11 +3,16 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import messages from "@/messages/en.json";
 import { WHEEL } from "@/lib/wheel";
+import { PROJECT_URLS } from "@/lib/projects";
+import { whatsappUrl } from "@/lib/pricing";
 import Grain from "../Grain";
 import CardVideo from "./CardVideo";
 import { useWheel, WHEEL_QUERY } from "./useWheel";
 
 const t = messages.work;
+const CTA = t.projects.length - 1; // "Your project": opens WhatsApp
+const linkOf = (i: number) => (i === CTA ? whatsappUrl(messages.contact.waMessage) : PROJECT_URLS[i]);
+const PILL = "inline-flex min-h-11 items-center rounded-full bg-bone px-5 text-[13px] font-extrabold tracking-[0.04em] text-ink uppercase [font-stretch:112%]";
 
 const THEMES = {
   paper: { bg: "#F1F0EC", fg: "#141414", line: "rgba(20,20,20,0.18)" },
@@ -80,11 +85,15 @@ export default function Work() {
           ))}
         </dl>
         <div className="mt-[26px] flex items-center gap-[18px]">
-          {/* shortcut: disabled until the full-screen project viewer exists */}
-          <button type="button" disabled className="rounded-full bg-bone px-5 py-3.5 text-[13px] font-extrabold tracking-[0.04em] text-ink uppercase [font-stretch:112%]">
-            {t.openProject}
-          </button>
-          <span aria-hidden="true" className="inline-block -rotate-4 font-hand text-[22px] text-red-light">{t.fullScreen}</span>
+          {linkOf(active) ? (
+            <a href={linkOf(active)!} target="_blank" rel="noopener noreferrer" className={PILL}>
+              {active === CTA ? messages.contact.whatsapp : t.visitSite}
+            </a>
+          ) : (
+            <span aria-disabled="true" className={`${PILL} opacity-50`}>
+              {t.comingSoon}
+            </span>
+          )}
         </div>
       </div>
 
@@ -133,8 +142,20 @@ export default function Work() {
                 ))}
                 <span className="label-mono ml-2.5 text-[10px] tracking-[0.12em] opacity-80">{`0${i + 1} · ${proj.kind}`}</span>
               </div>
+              {/* Stretched link: the whole card opens the live site (or WhatsApp for "Your project"). */}
+              {linkOf(i) && (
+                <a
+                  href={linkOf(i)!}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={cta ? t.ctaLabel : t.visitLabel.replace("{name}", proj.name)}
+                  className="absolute inset-0 z-[3]"
+                />
+              )}
               {isActive && !cta && (
-                <span className="label-mono absolute top-10 right-3.5 z-[2] rounded bg-red px-2 py-1.5 text-[10px] tracking-[0.12em] text-[#FFF6F2]">{t.playing}</span>
+                <span className="label-mono absolute top-10 right-3.5 z-[2] rounded bg-red px-2 py-1.5 text-[10px] tracking-[0.12em] text-[#FFF6F2]">
+                  {PROJECT_URLS[i] ? t.playing : t.comingSoon}
+                </span>
               )}
               <div className="card-body grid gap-3.5 p-3.5">
                 <div className="flex flex-col justify-between gap-4">
@@ -145,9 +166,9 @@ export default function Work() {
                   </div>
                 </div>
                 {cta ? (
-                  <a href="#contact" className="flex min-h-40 items-center justify-center rounded-lg border-2 border-dashed font-hand text-[30px]" style={{ borderColor: th.line }}>
+                  <span className="flex min-h-40 items-center justify-center rounded-lg border-2 border-dashed font-hand text-[30px]" style={{ borderColor: th.line }}>
                     {cta}
-                  </a>
+                  </span>
                 ) : (
                   <CardVideo
                     src={m.video}

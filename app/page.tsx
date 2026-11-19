@@ -2,25 +2,26 @@ import Hero from "@/components/Hero";
 import Work from "@/components/work/Work";
 import Services from "@/components/services/Services";
 import About from "@/components/about/About";
-import Timeline from "@/components/Timeline";
+import Contact from "@/components/contact/Contact";
+import ProgressRing from "@/components/ProgressRing";
+import SoundButton from "@/components/SoundButton";
 import messages from "@/messages/en.json";
 
 export default function Home() {
   return (
     <>
-      <main className="pb-[84px]">
+      <a href="#contact" className="sr-only z-[60] rounded-full bg-bone px-4 py-2 font-mono text-xs text-ink uppercase focus:not-sr-only focus:fixed focus:top-4 focus:left-4">
+        {messages.timeline.skipToContact}
+      </a>
+      <main>
         <Hero />
         <Work />
         <Services />
         <About />
-        {/* shortcut: empty chapter stubs so the timeline has sections to map; replaced as each chapter is built */}
-        {messages.timeline.chapters.slice(4).map(({ id, label }, i) => (
-          <section key={id} id={id} className="flex min-h-svh items-center justify-center border-t border-white/10">
-            <h2 className="headline text-[clamp(40px,8vw,120px)] text-bone/20">{`0${i + 5} ${label}`}</h2>
-          </section>
-        ))}
+        <Contact />
       </main>
-      <Timeline />
+      <SoundButton />
+      <ProgressRing />
     </>
   );
 }

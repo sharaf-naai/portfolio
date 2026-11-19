@@ -52,7 +52,7 @@ export function useWheel(rootRef: RefObject<HTMLElement | null>, cardsRef: RefOb
       const tween = gsap.to(proxy, {
         rot: count - 1,
         ease: "none",
-        scrollTrigger: { trigger: root, start: "top top", end: `+=${(count - 1) * 100}%`, pin: true, scrub: 0.6, onUpdate: snapLater },
+        scrollTrigger: { trigger: root, start: "top top", end: `+=${(count - 1) * 70}%`, pin: true, scrub: 0.25, onUpdate: snapLater },
         onUpdate: () => {
           cards.style.setProperty("--rot", proxy.rot.toFixed(4));
           const i = Math.round(proxy.rot);

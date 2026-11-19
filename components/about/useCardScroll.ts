@@ -4,8 +4,6 @@ import { useEffect, useRef, type RefObject } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-const TIMELINE_BAR_PX = 84; // height of the fixed timeline bar (components/Timeline.tsx)
-
 /**
  * The card rises from below (rotateX 25° → flat) as the section arrives, then the section pins ~80vh:
  * the hologram shimmer sweeps once and the name's raised letters light up left to right.
@@ -22,11 +20,11 @@ export function useCardScroll(rootRef: RefObject<HTMLElement | null>, onHint: ()
     const mm = gsap.matchMedia();
 
     mm.add("(prefers-reduced-motion: no-preference)", () => {
-      // Pin once the label + title + card block is centered in the space above the timeline bar,
-      // so the gap above the label equals the gap between the card and the bar.
+      // Pin once the label + title + card block is centered on screen,
+      // so the gap above the label equals the gap below the card.
       const content = root.querySelector("[data-about-content]");
-      const centered = () => `center ${(window.innerHeight - TIMELINE_BAR_PX) / 2}px`;
-      const rise = { trigger: content, start: "top 80%", end: centered, scrub: 1 };
+      const centered = "center center";
+      const rise = { trigger: content, start: "top 80%", end: centered, scrub: 0.25 };
 
       gsap.from(root.querySelector("[data-card-rise]"), { yPercent: 45, rotateX: 25, opacity: 0, ease: "power2.out", scrollTrigger: rise });
       gsap.from(root.querySelector("[data-card-shadow]"), { opacity: 0, scale: 0.6, ease: "power2.out", scrollTrigger: rise });
@@ -39,7 +37,7 @@ export function useCardScroll(rootRef: RefObject<HTMLElement | null>, onHint: ()
             start: centered,
             end: "+=80%",
             pin: root,
-            scrub: 1,
+            scrub: 0.25,
             onUpdate: (self) => {
               if (hinted || self.progress < 0.5) return;
               hinted = true;

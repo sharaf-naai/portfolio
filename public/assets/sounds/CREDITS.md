@@ -11,7 +11,7 @@ Until these files exist, the sound toggle works but plays nothing.
 | rip3     | longer paper tear                    | [SOURCE]        | [LICENSE] |
 | rustle   | paper rustle (re-assembly)           | [SOURCE]        | [LICENSE] |
 | whoosh   | soft air whoosh                      | [SOURCE]        | [LICENSE] |
-| pencil   | pencil on paper                      | [SOURCE]        | [LICENSE] |
 | tick     | timeline tick                        | [SOURCE]        | [LICENSE] |
 | click    | wheel snap click                     | [SOURCE]        | [LICENSE] |
 | cardFlip | short card whoosh + soft click      | [SOURCE]        | [LICENSE] |
+| scratch  | tiny pencil scratch (sound turns on) | [SOURCE]        | [LICENSE] |

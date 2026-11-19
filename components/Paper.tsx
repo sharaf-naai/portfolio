@@ -16,7 +16,7 @@ type Props = React.HTMLAttributes<HTMLDivElement>;
 /** The paper sheet: grid + crumples + grain. Position/size/clip come from the caller. */
 export default function Paper({ className = "", style, children, ...rest }: Props) {
   return (
-    <div className={`relative ${className}`} style={{ background: PAPER_BG, ...style }} {...rest}>
+    <div data-theme="paper" className={`relative ${className}`} style={{ background: PAPER_BG, ...style }} {...rest}>
       <Grain />
       {children}
     </div>

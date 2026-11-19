@@ -3,7 +3,8 @@
 Personal freelance portfolio of a web developer based in Morocco (websites, web apps, CRMs).
 Clients come from friends' referrals. Awwwards-level motion, but it must stay fast and usable on mid-range Android phones.
 
-Design reference (canvas, 2 artboards: Hero, Work): https://claude.ai/artifact/3bQyVR8fsEcASw37sBVkUE
+Design reference canvas: https://claude.ai/artifact/3bQyVR8fsEcASw37sBVkUE
+Chosen artboards: LD1 (loader) · Hero + Rip storyboard · "Hero — FINAL controls" (progress ring + pencil sound button) · Work (wheel) · S5 v2 (services brief) · I4 (about card) · C1 (contact). Everything else on the canvas is an unused option. There is **no project page**: project cards open the live site in a new tab.
 
 ## Stack
 - Next.js (App Router, TypeScript), Tailwind CSS
@@ -24,36 +25,48 @@ Design reference (canvas, 2 artboards: Hero, Work): https://claude.ai/artifact/3
   - JetBrains Mono for labels and counters (uppercase, letter-spacing 0.08–0.14em).
 
 ## Page structure (chapters)
-00 Loader · 01 Hero · 02 Work · 03 Services + prices · 04 About + process · 05 Lab · 06 Contact (WhatsApp)
+00 Loader · 01 Hero · 02 Work · 03 Services + prices · 04 About + process · 05 Contact (WhatsApp)
+**Lab is hidden for now** (designs exist on the canvas; keep it out of the page and out of the progress ring). The ring has 5 chapter dots.
 
 ## Build order (do these first, in order)
 1. Scaffold: tokens, fonts, Lenis provider, paper background component, grain overlay.
-2. **Hero (static)**
+2. **Loader (LD1)**: see the "00 Loader" section below.
+3. **Hero (static)**
    - Small line "DEVELOPER / BUILDER … 2026" above the name.
    - The name is huge in Archivo 900 expanded. The **O is replaced by an inline SVG ink portrait** sized at about 1.08em.
    - Under it: a red handwritten Caveat note "ok, scroll and rip it" with a hand-drawn arrow, then the ornaments ✸ ✦ ♣.
    - The bottom of the paper has a torn edge (clip-path polygon). The dark cinematic layer sits underneath, with a big "WEBSITES" word.
    - Three taped polaroids (project screenshots + Caveat captions) overlap the tear.
-   - Use the placeholder portrait SVG until the real stroke-based SVG arrives; the real one gets drawn in with DrawSVG on load.
-3. **Timeline scrollbar = the navigation**
-   - Hide the native scrollbar. A fixed bar at the bottom of the screen (84px, `rgba(10,10,10,.94)`) contains:
-     - logo circle (mini ink face)
-     - "0X / 06" counter + chapter name and %
-     - a track of clips, one per chapter (Hero, Work, Services, About, Lab, Contact), each as wide as its section is tall
-     - a red playhead
-     - a sound toggle (off by default)
-     - a "Book a call" pill
-   - The playhead follows Lenis scroll progress. Clips you've passed fill red at 32% opacity; the current clip gets a red border.
-   - Dragging the playhead scrubs `lenis.scrollTo`. Clicking a clip scrolls to that section.
-   - Keyboard accessible: a range input with `aria-label="Scroll position"`; the clips are buttons.
-4. **Rip transition** (storyboard: canvas row "Paper rip", frames 1–4)
+   - Use the placeholder portrait SVG until the real stroke-based SVG arrives.
+   - There is **no top navigation**. The page opens on the paper and the name.
+4. **Navigation = a round progress ring + a pencil sound button** (canvas artboard "Hero — FINAL controls")
+   - Hide the native scrollbar (`scrollbar-width: none` + `::-webkit-scrollbar { display: none }`). There is no menu.
+   - **Progress ring:** fixed in the **bottom-right corner** (28px from the edges).
+     - A 76px dark circle `rgba(12,12,12,.88)` with a soft shadow, so it reads on both the paper and the dark sections.
+     - Inside it, a **thick** SVG ring (r 30, stroke 8): a faint track `rgba(237,235,230,.18)` and a **red arc** (`#E0281E`, round caps) that fills clockwise from 12 o'clock as you scroll. Use `stroke-dasharray = 2πr` and `stroke-dashoffset = 2πr × (1 − progress)`, driven by Lenis progress through `gsap.quickSetter`.
+     - **The percentage sits in the center** (JetBrains Mono 14px, bone), e.g. "37%".
+     - 5 small dots (r 3, with a 1.5px dark outline so they stay visible on the red arc) sit on the ring at the start of each chapter. Dots already passed turn red. No section names are shown.
+     - **Click** = smooth-scroll to the next chapter. At 100% the icon becomes ↑ and a click rewinds to the top.
+     - On hover the ring scales to 1.08 and the % changes to "next ↓".
+     - The `tick` sound plays on click.
+     - It stays hidden during the loader and fades and scales in when the hero appears.
+     - **Accessibility:** it's a real `<button>` whose `aria-label` updates ("Scroll progress 37%. Go to next part" / "Back to top"). Add a visible-on-focus "Skip to contact" link.
+   - **Sound button:** fixed in the **top-right corner**, a 64px **hand-drawn pencil speaker** in graphite grey `#4A4A4A`, drawn with a double sketchy stroke.
+     - **On:** 3 sound-wave arcs.
+     - **Off (default):** the waves are replaced by a red scribbled ✕.
+     - **Click:** the new state draws itself with DrawSVG (~0.35s), with a tiny pencil-scratch sound when turning on.
+     - A small Caveat label underneath: "sound off" (red) / "sound on" (grey).
+     - The choice is saved in `localStorage`.
+     - It is a `<button aria-pressed>` with the label "Turn sound on" / "Mute sound".
+     - Over dark sections, the strokes switch to bone `#EDEBE6`.
+5. **Rip transition** (storyboard: canvas row "Paper rip", frames 1–4)
    - Scrubbed by scroll, never a one-shot, and fully reversible. The hero pins for about 120vh while the rip plays.
    - Build: render the paper layer **twice**. Clip each copy along the same jagged rip line (left half / right half, `clip-path: polygon`; rip runs from bottom to top around x ≈ 60%). Add a 6–7px white rough stroke along the rip (SVG polyline) for the paper fibers; each half shows its side of it. `transform-origin` sits at the top of the rip line; add a drop-shadow on both halves.
    - Timeline (one GSAP timeline, `scrub: 1`):
      - **0–10% build-up:** the halves lift by −6px, the shadow grows, the polaroids lift (bigger shadow, y −14…−18, small rotation), the "rip it" note wiggles.
      - **10–35% tear starts:** the halves rotate −2° / +1.6° around the top of the rip, so a wedge opens from the bottom.
      - **35–65% split:** left half translate(−150px, −40px) rotate(−8°), right half translate(150px, −40px) rotate(6°). "WEBSITES" scales 1.12 → 1.0 and the teal/amber glows brighten.
-     - **65–100% fly-off + handoff:** left half translate(−980px, −260px) rotate(−22°), right half translate(980px, −220px) rotate(18°), plus a small flutter (rotation wobble). The three polaroids move (Flip plugin or measured transforms) onto their arc positions and **become the Work wheel cards**. The timeline playhead enters "02 Work".
+     - **65–100% fly-off + handoff:** left half translate(−980px, −260px) rotate(−22°), right half translate(980px, −220px) rotate(18°), plus a small flutter (rotation wobble). The three polaroids move (Flip plugin or measured transforms) onto their arc positions and **become the Work wheel cards**. The progress ring passes the Work dot.
    - Mobile / reduced motion: one torn sheet slides up and away, no split.
 
    **Make it feel like real paper, not cardboard (required):**
@@ -69,29 +82,32 @@ Design reference (canvas, 2 artboards: Hero, Work): https://claude.ai/artifact/3
    - **Paper bend (upgrade path):** if the DOM version still looks stiff, swap the paper layer for a React Three Fiber plane (paper rendered to a texture, mesh subdivided ~40×40) and curl the corners and edges in a vertex shader as the halves fly, so the paper bends instead of staying flat. Keep the paper layer behind one `<RipPaper>` component so this swap doesn't touch the rest of the page.
 
 ### Sound (Howler.js)
-- Off by default; turned on with the speaker button in the timeline bar. Start the audio context only after that click (browser autoplay rules). Mute when `document.hidden`. Project videos are always muted.
+- Off by default; turned on with the hand-drawn pencil speaker button in the top-right corner. Start the audio context only after that click (browser autoplay rules). Mute when `document.hidden`. Project videos are always muted.
 - One audio sprite (webm + mp3 fallback), under 200 KB, low master volume (~0.35).
 - Sounds:
   - `tapePeel`: rip progress 5%, the polaroids lift
   - `rip1` / `rip2` / `rip3`: rip progress 25% / 45% / 65%, **scrolling down only**; volume scales with Lenis velocity (clamp 0.3–1)
   - `rustle`: crossing 25% while scrolling up (the paper re-assembles)
   - `whoosh`: 75%, the halves fly off
-  - `pencil`: on load while the signature and portrait draw in
-  - `tick`: timeline clip click / playhead snap
+  - `pencil`: during the loader, while the pencil draws the portrait (loop, synced to drawing speed)
+  - `tick`: clicking the progress ring
   - `click`: each Work-wheel snap to a new card
   - `hum` (optional): very quiet projector loop while sound is on
 - Each trigger fires once per crossing (keep a last-direction + last-threshold guard so it doesn't machine-gun).
 - Source: the owner's own recordings (real paper tear, tape peel) or CC0 sounds; note the license next to every file in `/public/sounds/CREDITS.md`.
-5. **Work: pinned project wheel**
+6. **Work: pinned project wheel**
    - The section pins for the length of all the cards.
    - The cards (520×330, radius 14) sit on an arc whose center is off-screen to the left (center ≈ x −260, y 50% of the screen; radius ≈ 1110px). Neighbouring cards are about 17° apart, and each card is rotated by its angle.
    - Scroll rotates the wheel: one card per step, with snapping.
    - The active card (closest to 0°): full brightness, 3px bone outline, red "▶ PLAYING" chip, autoplaying muted looped `<video>` with a thin progress line. The other cards: `brightness(.62)`, video paused. Hovering any card plays its video.
    - Card colors rotate between paper, ink and red. Each card has a browser chrome bar, a big number, the name, "kind · year", and the video.
-   - Left panel shows the active project: section label, a big outlined number, the title, one sentence, a details table, an "Open project →" pill (later opens the full-screen project viewer), and the project list with the active one marked in red.
+   - Left panel shows the active project: section label, a big outlined number, the title, one sentence, a details table, a **"Visit site ↗"** pill, and the project list with the active one marked in red.
    - Projects: 01 Restaurant site (concept) · 02 Hanabaly (real client: appointment platform for doctors and psychologists) · 03 Booking / WhatsApp engine (concept) · 04 Car rental CRM (concept) · 05 "Your project" (an empty dashed card, the call to action).
    - After card 05 the pin releases and the page scrolls on normally.
-6. **Mobile + accessibility**
+   - **Clicking a card (or "Visit site ↗") opens that project's live site in a new tab.** Use `target="_blank" rel="noopener noreferrer"`. The custom cursor over a card reads "Visit ↗". There is no in-site project page. Each project's URL lives in `lib/projects.ts`.
+   - A project without a live link yet (e.g. a concept not deployed): the card isn't clickable, and its chip says "Coming soon" instead of "▶ PLAYING".
+   - The "Your project" card (05) opens WhatsApp instead.
+7. **Mobile + accessibility**
    - Under 768px the wheel becomes a vertical stack of cards, and videos play when in view (IntersectionObserver).
    - `prefers-reduced-motion`: no pinning or rotation, plain scroll; Lenis is off.
    - Videos: `muted playsinline loop preload="metadata"`, with a poster image. Load only the active ±1.
@@ -187,6 +203,38 @@ Design: canvas artboard "I4 · Dark access card". This **replaces** the passport
 
 **Mobile:** card width 92vw with the same ratio. The swipe works with the thumb. The back's two columns stack (details, then QR).
 **Sounds:** add `cardFlip` (a short card whoosh + soft click) to the sprite; the `stamp` sound is no longer needed.
+
+## 00 Loader: the ink face draws itself (LD1)
+Design: canvas artboard "LD1 · Ink face draws itself".
+- Full screen, paper background (same grid, crumple and grain as the hero), nothing else on screen.
+- The ink-portrait SVG is drawn **stroke by stroke** with DrawSVG, in a natural order: face outline → ears → hair curls → eyebrows → eyes → nose → moustache → mouth → neck. A faint 12%-opacity "ghost" of the finished face sits underneath as a guide.
+- **A very realistic pencil does the drawing:**
+  - Asset: either a cut-out photo of a real yellow HB pencil (WebP with alpha, ~700px long, shot by the owner or CC0) or a detailed SVG. The SVG version needs:
+    - a hexagonal yellow body with 3 visible facets (light / mid / dark bands)
+    - a printed brand line in small dark-green type ("YOUR NAME · HB")
+    - a silver ferrule with ridges and a pink eraser
+    - a sharpened wood cone with visible grain and shavings edges
+    - a dark graphite tip with a tiny highlight
+  - Its tip follows the exact point being drawn: `path.getPointAtLength(progress × length)` on the current stroke. It is tilted ~30°, wobbles very slightly (±1.5° noise), and lifts 6–10px between strokes, moving in an arc to the next stroke's start point.
+  - A soft contact shadow sits under the tip (blurred ellipse), plus a long soft shadow of the whole pencil on the paper, offset down-right.
+  - The `pencil` sound loops while a stroke is being drawn and pauses during lifts. Like all sound, it only plays if the visitor already turned sound on in an earlier visit (saved preference). Never autoplay.
+- **Counter:** a big "63%" bottom-left (Archivo 900 expanded, ~160px, the "%" smaller). Bottom-right, a red Caveat note that rotates through: "sharpening pencils…" → "drawing your host…" → "almost there ✦".
+- **Progress** is real: fonts, hero images, the sound sprite metadata and the first video poster. It lasts at least 1.6s and at most 4s. The drawing speed is mapped to progress, so the face is complete exactly at 100%.
+- **Exit (the magic part):** at 100% the pencil lifts and slides off-screen. The drawn face then shrinks and moves (Flip plugin) into the **O of the name in the hero**, and the rest of the hero fades in around it. The loader face *becomes* the hero's O.
+- Repeat visits in the same session (`sessionStorage`): a short 0.6s version, with no pencil and the face drawn fast.
+- `prefers-reduced-motion`: show the finished face + counter, then fade into the hero.
+
+## 05 Contact: the paper comes back (C1)
+Design: canvas artboard "C1 · The paper comes back".
+- **Transition in:** the page goes back to the paper background. As a bookend to the hero rip, the two torn paper halves fly back in from the sides and join, with a small overshoot and the `rustle` sound, then a strip of tape lands across the seam.
+- Label "05 — Contact" (mono, red). A huge **"LET'S TALK"** (Archivo 900 expanded, ~200px, centered, one line on desktop, 2 lines on mobile).
+- Below it, the ink-portrait SVG (~150px), and next to it a red Caveat note: "the paper is back ✦ — say hi".
+- Buttons, centered:
+  - a red pill **"Message me on WhatsApp"** (WhatsApp icon), opening `wa.me` with the prefilled "Hi! I saw your portfolio and…"
+  - an outline pill with the email address (`mailto:`)
+- Under the buttons (mono, small): "Usually replies within [X] hours · it's [HH:MM] in Morocco". Compute the time live with `Intl.DateTimeFormat` and `timeZone: 'Africa/Casablanca'`; never hard-code the UTC offset.
+- **Footer** (one line, mono 11px, a top border at 25% ink): © 2026 Your Name · Made in Morocco · EN · FR · AR · Instagram · LinkedIn · GitHub · **"Rewind to top ↑"**. Rewind scrolls back to the top with Lenis (~1.6s). The progress ring's red arc visibly unwinds, and the paper rip re-assembles as you pass the hero.
+- The progress ring reaches 100% here: all dots are red and its icon becomes ↑ (back to top).
 
 ## Rules
 - Never invent testimonials, awards or client numbers. Leave placeholders like [YEAR], [STACK], [PRICE] until the owner gives real values.

@@ -26,11 +26,6 @@
     ]
   },
   "timeline": {
-    "navLabel": "Chapters and scroll position",
-    "home": "Back to top",
-    "scrollPosition": "Scroll position",
-    "goTo": "Go to {chapter}",
-    "bookCall": "Book a call",
     "chapters": [
       {
         "id": "hero",
@@ -49,21 +44,20 @@
         "label": "About"
       },
       {
-        "id": "lab",
-        "label": "Lab"
-      },
-      {
         "id": "contact",
         "label": "Contact"
       }
     ],
-    "soundOn": "Turn sound off",
-    "soundOff": "Turn sound on"
+    "skipToContact": "Skip to contact",
+    "progressLabel": "Scroll progress {pct}%. Go to next part",
+    "backToTop": "Back to top",
+    "next": "next ↓",
+    "soundLabel": "Sound",
+    "soundOnNote": "sound on",
+    "soundOffNote": "sound off"
   },
   "work": {
     "label": "02 — Selected work",
-    "openProject": "Open project →",
-    "fullScreen": "full screen ↗",
     "playing": "▶ Playing",
     "videoPlaceholder": "IMG · video loop",
     "details": {
@@ -119,7 +113,11 @@
         "stack": "[STACK]",
         "cta": "your site here →"
       }
-    ]
+    ],
+    "visitSite": "Visit site ↗",
+    "comingSoon": "Coming soon",
+    "visitLabel": "Visit {name} (opens in a new tab)",
+    "ctaLabel": "Message me on WhatsApp about your project"
   },
   "services": {
     "label": "03 — Services",
@@ -283,5 +281,28 @@
     "request": "Request access",
     "requestMessage": "Hi! I'd like to request access 👋 (from your portfolio)",
     "flipBack": "↻ flip back"
+  },
+  "contact": {
+    "label": "05 — Contact",
+    "title": [
+      "Let’s",
+      "talk"
+    ],
+    "note": "the paper is back ✦ — say hi",
+    "whatsapp": "Message me on WhatsApp",
+    "waMessage": "Hi! I saw your portfolio and…",
+    "email": "[EMAIL]",
+    "replies": "Usually replies within [X] hours · it’s {time} in Morocco",
+    "footer": {
+      "copy": "© 2026 {name}",
+      "made": "Made in Morocco",
+      "langs": [
+        "EN",
+        "FR",
+        "AR"
+      ],
+      "languages": "Languages",
+      "rewind": "Rewind to top ↑"
+    }
   }
 }

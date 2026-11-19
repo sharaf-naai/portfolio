@@ -141,9 +141,9 @@ export function useRip(rootRef: RefObject<HTMLElement | null>) {
         scrollTrigger: {
           trigger: root,
           start: "top top",
-          end: "+=120%",
+          end: "+=90%",
           pin: true,
-          scrub: 1,
+          scrub: 0.25, // Lenis already smooths; a big scrub on top makes the tear lag behind the finger
           invalidateOnRefresh: true,
           onRefresh: measure,
         },
