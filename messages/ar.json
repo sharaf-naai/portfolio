@@ -35,18 +35,16 @@
     "fields": {
       "type": "النوع",
       "for": "لِـ",
-      "stack": "التقنيات",
-      "year": "السنة"
+      "stack": "التقنيات"
     },
     "projects": {
       "restaurant": {
         "name": "موقع مطعم",
         "kind": "فكرة",
-        "summary": "[جملة واحدة عن المشروع]",
+        "summary": "قائمة طعام وصور وحجز طاولات، مصمَّم لمطعم.",
         "type": "موقع ويب · فكرة",
         "for": "المطاعم",
-        "stack": "[STACK]",
-        "year": "[YEAR]"
+        "stack": "Next.js · React"
       },
       "hanabaly": {
         "name": "Hanabaly",
@@ -54,8 +52,7 @@
         "summary": "منصّة لحجز المواعيد لدى الأطباء والأخصائيين النفسيين.",
         "type": "تطبيق ويب · عميل حقيقي",
         "for": "الأطباء والأخصائيون النفسيون",
-        "stack": "[STACK]",
-        "year": "[YEAR]"
+        "stack": "Next.js · React"
       },
       "booking": {
         "name": "محرّك حجوزات",
@@ -63,29 +60,23 @@
         "summary": "يحجز العملاء عبر الموقع أو واتساب، وتُرسَل التذكيرات تلقائيًا.",
         "type": "تطبيق ويب · فكرة",
         "for": "العيادات والصالونات والنوادي الرياضية",
-        "stack": "[STACK]",
-        "year": "[YEAR]"
+        "stack": "Next.js · React"
       },
       "carRental": {
         "name": "CRM لتأجير السيارات",
         "kind": "فكرة",
-        "summary": "[جملة واحدة عن المشروع]",
+        "summary": "الأسطول والحجوزات والعملاء في لوحة تحكم واحدة.",
         "type": "CRM · فكرة",
         "for": "وكالات تأجير السيارات",
-        "stack": "[STACK]",
-        "year": "[YEAR]"
+        "stack": "Next.js · React"
       },
       "yours": {
         "name": "مشروعك",
         "kind": "التالي؟",
-        "summary": "موقعك هنا ←",
-        "type": "[النوع]",
-        "for": "أنت",
-        "stack": "[STACK]",
-        "year": "[YEAR]"
+        "summary": "موقعك هنا ←"
       }
     },
-    "videoPlaceholder": "فيديو · [VIDEO]",
+    "videoPlaceholder": "المعاينة قريبًا",
     "visitLabel": "زيارة {name} (يُفتح في علامة تبويب جديدة)",
     "ctaLabel": "راسلني على واتساب بخصوص مشروعك"
   },
@@ -127,11 +118,7 @@
       }
     },
     "step3": "ميزانيتك",
-    "currencyIn": "بِـ",
     "detected": "تم الاكتشاف تلقائيًا: {country}",
-    "under": "أقل من {a}",
-    "range": "{a} – {b}",
-    "over": "{c} فأكثر",
     "notSure": "لست متأكدًا بعد",
     "step4": "متى تحتاجه؟",
     "timing": {
@@ -144,11 +131,12 @@
       "budget": "الميزانية",
       "timeline": "المدة",
       "send": "أرسل عبر واتساب",
-      "footer": "أردّ بعرض سعر يناسب ميزانيتك",
-      "startsAround": "تبدأ المشاريع عادةً من حوالي {x}"
+      "footer": "أردّ بعرض سعر يناسب ميزانيتك"
     },
-    "whatsapp": "مرحبًا! أرغب في {need}{addons}. الميزانية: {budget}. المدة: {timeline}. [{country}]",
-    "currencyLabel": "العملة"
+    "whatsapp": "مرحبًا! أرغب في {need}{addons}. الميزانية: {budget}. المدة: {timeline}.",
+    "currencyLabel": "العملة",
+    "amount": "مبلغ ميزانيتك",
+    "amountPlaceholder": "المبلغ (اختياري)"
   },
   "about": {
     "label": "04 — نبذة وطريقة العمل",
@@ -157,11 +145,11 @@
     "role": "مطوّر ويب · المغرب · EN/FR/AR",
     "fields": {
       "experience": "الخبرة",
-      "experienceValue": "[عدد] سنوات",
+      "experienceValue": "+4 سنوات",
       "client": "عميل حقيقي",
       "stack": "التقنيات",
       "studies": "الدراسة",
-      "studiesValue": "[المؤسسة / التخصص]"
+      "studiesValue": "إجازة في علوم الحاسوب"
     },
     "process": [
       {
@@ -188,8 +176,7 @@
     "front": "وجه البطاقة",
     "back": "ظهر البطاقة",
     "whatsapp": "مرحبًا! أرغب في طلب الدخول (من موقعك)",
-    "photo": "[صورة]",
-    "photoAlt": "[وصف الصورة]",
+    "photoAlt": "صورة شخصية بالأبيض والأسود لشرف",
     "qrLabel": "رمز QR: تواصل عبر واتساب"
   },
   "contact": {
@@ -198,9 +185,9 @@
     "note": "عادت الورقة، قل مرحبًا",
     "whatsapp": "راسلني على واتساب",
     "whatsappText": "مرحبًا! رأيت موقعك و…",
-    "reply": "أردّ عادةً خلال {hours} ساعات · الساعة الآن {time} في المغرب",
+    "reply": "أردّ عادةً خلال {hours} ساعة · الساعة الآن {time} في المغرب",
     "madeIn": "صُنع في المغرب",
     "rewind": "العودة إلى البداية ↑",
-    "email": "[EMAIL]"
+    "email": "charafeddinenaai@gmail.com"
   }
 }

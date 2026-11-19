@@ -3,13 +3,10 @@
 import { useEffect, useId, useState } from "react";
 import { useLocale, useMessages } from "next-intl";
 import Paper from "../Paper";
-import {
-  COUNTRIES, CURRENCIES, SHOW_START_LINE, bands, briefMessage, detectCountry, edges, whatsappUrl,
-  type CountryCode, type Currency, type Need,
-} from "@/lib/pricing";
+import { COUNTRIES, CURRENCIES, briefMessage, detectCountry, formatBudget, whatsappUrl, type CountryCode, type Currency } from "@/lib/pricing";
 
-// Message keys → pricing ids, in pill order.
-const NEEDS = [["website", "website"], ["webApp", "webapp"], ["crm", "crm"], ["automation", "automation"]] as const;
+// Message keys, in pill order.
+const NEEDS = ["website", "webApp", "crm", "automation"] as const;
 const ADDONS = ["lang", "booking", "whatsapp", "cms", "seo", "care"] as const;
 const TIMES = ["asap", "soon", "noRush"] as const;
 const CURRENCY_KEY = "currency"; // kept across language switches
@@ -56,18 +53,18 @@ function Row({ k, v }: { k: string; v: string }) {
   );
 }
 
-export default function Brief({ rates }: { rates: Record<Currency, number> }) {
+export default function Brief() {
   const { services: t, hero } = useMessages();
   const locale = useLocale();
-  const [country, setCountry] = useState<CountryCode>("OTHER");
+  const [country, setCountry] = useState<CountryCode | null>(null); // null until detected in the browser (keeps server and client HTML equal)
   const [currency, setCurrency] = useState<Currency | null>(null); // null = the country's own currency
   const [need, setNeed] = useState(0);
   const [addons, setAddons] = useState<string[]>([]);
-  const [budget, setBudget] = useState(4); // "Not sure yet": no anchoring by default
+  const [amount, setAmount] = useState(""); // digits only; empty = "Not sure yet"
   const [time, setTime] = useState(1);
 
   // Detection runs in the browser so the page stays static: cookie from proxy.ts → timezone → OTHER.
-  // The currency choice survives a language switch (it only converts; it never changes the country's ranges).
+  // The country only picks the default currency. The currency choice survives a language switch.
   useEffect(() => {
     setCountry(detectCountry(document.cookie, Intl.DateTimeFormat().resolvedOptions().timeZone));
     try {
@@ -85,13 +82,12 @@ export default function Brief({ rates }: { rates: Record<Currency, number> }) {
   const regionName = (c: CountryCode) => new Intl.DisplayNames([locale], { type: "region" }).of(c === "OTHER" ? "001" : c) ?? c;
   const currencyName = (c: Currency) => new Intl.DisplayNames([locale], { type: "currency" }).of(c) ?? c;
 
-  const cur = currency ?? (COUNTRIES[country].currency as Currency);
-  const [needKey, needId] = NEEDS[need];
-  const needName = t.needs[needKey];
-  const budgets = [...bands(edges(country, needId as Need, cur, rates), cur, t, locale), t.notSure];
+  const cur = currency ?? COUNTRIES[country ?? "OTHER"];
+  const needName = t.needs[NEEDS[need]];
+  const budget = formatBudget(amount, cur, locale) ?? t.notSure;
   const picked = ADDONS.filter((id) => addons.includes(id)).map((id) => ({ id, ...t.addons[id] }));
   const times = TIMES.map((k) => t.timing[k]);
-  const message = briefMessage(t.whatsapp, { need: needName, addons: picked.map((a) => a.name), budget: budgets[budget], time: times[time], country });
+  const message = briefMessage(t.whatsapp, { need: needName, addons: picked.map((a) => a.name), budget, time: times[time] });
   const toggle = (id: string) => setAddons((s) => (s.includes(id) ? s.filter((x) => x !== id) : [...s, id]));
 
   return (
@@ -102,7 +98,7 @@ export default function Brief({ rates }: { rates: Record<Currency, number> }) {
             <p className="label-mono mb-3.5 text-[12px] text-pen">{t.label}</p>
             <h2 className="headline text-[clamp(48px,7vw,80px)] text-ink">{t.title}</h2>
 
-            <Pills legend={`1 · ${t.step1}`} items={NEEDS.map(([k]) => t.needs[k])} value={need} onPick={setNeed} />
+            <Pills legend={`1 · ${t.step1}`} items={NEEDS.map((k) => t.needs[k])} value={need} onPick={setNeed} />
 
             <fieldset aria-labelledby="brief-addons" className="min-w-0">
               <p id="brief-addons" className={stepLabel}>{`2 · ${t.step2}`}</p>
@@ -119,32 +115,33 @@ export default function Brief({ rates }: { rates: Record<Currency, number> }) {
               </div>
             </fieldset>
 
-            <Pills
-              legend={`3 · ${t.step3}`}
-              items={budgets}
-              value={budget}
-              onPick={setBudget}
-              extra={
-                <span className="inline-flex flex-wrap items-center gap-2 normal-case tracking-normal">
-                  <label htmlFor="brief-currency" className="label-mono text-[12px]">
-                    {t.currencyIn}
-                  </label>
-                  <select
-                    id="brief-currency"
-                    value={cur}
-                    onChange={(e) => pickCurrency(e.target.value as Currency)}
-                    aria-label={t.currencyLabel}
-                    className="min-h-9 cursor-pointer appearance-none rounded-full border-[1.5px] border-ink bg-[#F4F3EF] bg-[length:5px_5px,5px_5px] bg-[position:calc(100%-16px)_15px,calc(100%-11px)_15px] bg-no-repeat ps-3 pe-8 font-mono text-xs text-ink rtl:bg-[position:16px_15px,11px_15px]"
-                    style={{ backgroundImage: "linear-gradient(45deg, transparent 50%, #141414 50%), linear-gradient(135deg, #141414 50%, transparent 50%)" }}
-                  >
-                    {CURRENCIES.map((c) => (
-                      <option key={c} value={c}>{`${currencyName(c)} · ${c}`}</option>
-                    ))}
-                  </select>
-                  <span className="font-hand text-[26px] leading-none text-pen">{t.detected.replace("{country}", regionName(country))}</span>
-                </span>
-              }
-            />
+            <fieldset aria-labelledby="brief-budget" className="min-w-0">
+              <p id="brief-budget" className={stepLabel}>{`3 · ${t.step3}`}</p>
+              <div className="flex flex-wrap items-center gap-2.5">
+                <select
+                  value={cur}
+                  onChange={(e) => pickCurrency(e.target.value as Currency)}
+                  aria-label={t.currencyLabel}
+                  className="min-h-[46px] max-w-full cursor-pointer appearance-none rounded-full border-2 border-ink bg-[#F4F3EF] bg-[length:5px_5px,5px_5px] bg-[position:calc(100%-18px)_20px,calc(100%-13px)_20px] bg-no-repeat ps-4 pe-9 font-mono text-xs text-ink rtl:bg-[position:18px_20px,13px_20px]"
+                  style={{ backgroundImage: "linear-gradient(45deg, transparent 50%, #141414 50%), linear-gradient(135deg, #141414 50%, transparent 50%)" }}
+                >
+                  {CURRENCIES.map((c) => (
+                    <option key={c} value={c}>{`${currencyName(c)} · ${c}`}</option>
+                  ))}
+                </select>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  autoComplete="off"
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value.replace(/D/g, "").slice(0, 10))}
+                  aria-label={t.amount}
+                  placeholder={t.amountPlaceholder}
+                  className="min-h-[46px] w-[220px] max-w-full rounded-full border-2 border-ink bg-transparent px-4 text-[16px] text-ink placeholder:text-graphite"
+                />
+              </div>
+              {country && <p className="mt-2 font-hand text-[26px] leading-none text-pen">{t.detected.replace("{country}", regionName(country))}</p>}
+            </fieldset>
 
             <Pills legend={`4 · ${t.step4}`} items={times} value={time} onPick={setTime} />
           </div>
@@ -162,7 +159,7 @@ export default function Brief({ rates }: { rates: Record<Currency, number> }) {
                 </div>
               )}
               <div className="mt-3 border-t border-dashed border-ink pt-2.5 uppercase">
-                <Row k={t.receipt.budget} v={budgets[budget]} />
+                <Row k={t.receipt.budget} v={budget} />
                 <Row k={t.receipt.timeline} v={times[time]} />
               </div>
               <p className="mt-3.5 rounded-md bg-[#EFEEE8] px-3 py-2.5 text-[11px] leading-[1.6] text-[#2A2A2A]">“{message}”</p>
@@ -179,7 +176,6 @@ export default function Brief({ rates }: { rates: Record<Currency, number> }) {
               </a>
               <p className="mt-3 text-center text-[10px] uppercase tracking-[0.1em] text-[#4A4844]">{t.receipt.footer}</p>
             </div>
-            {SHOW_START_LINE && <p className="mt-4 font-mono text-[11px] text-[#4A4844]">{t.receipt.startsAround.replace("{x}", "[X]")}</p>}
           </div>
         </div>
       </Paper>

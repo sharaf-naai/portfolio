@@ -1,6 +1,11 @@
 @import "tailwindcss";
 @import "lenis/dist/lenis.css";
 
+/* Upright phones (the access card turns into a vertical badge). */
+@custom-variant badge (@media (max-width: 767px) and (orientation: portrait));
+/* Phones held sideways: wide but too short for stacked layouts. */
+@custom-variant short (@media (orientation: landscape) and (max-height: 500px));
+
 /* "Two inks": calm page, blue pen for personality, red (action) ONLY on clickable things. */
 @theme {
   --color-paper: #edede9;

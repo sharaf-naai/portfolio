@@ -35,18 +35,16 @@
     "fields": {
       "type": "Type",
       "for": "Pour",
-      "stack": "Stack",
-      "year": "Année"
+      "stack": "Stack"
     },
     "projects": {
       "restaurant": {
         "name": "Site de restaurant",
         "kind": "Concept",
-        "summary": "[UNE PHRASE SUR LE PROJET]",
+        "summary": "Menu, photos et réservation de table, pensé pour un restaurant.",
         "type": "Site web · concept",
         "for": "Restaurants",
-        "stack": "[STACK]",
-        "year": "[YEAR]"
+        "stack": "Next.js · React"
       },
       "hanabaly": {
         "name": "Hanabaly",
@@ -54,8 +52,7 @@
         "summary": "Une plateforme de prise de rendez-vous pour médecins et psychologues.",
         "type": "Application web · vrai client",
         "for": "Médecins, psychologues",
-        "stack": "[STACK]",
-        "year": "[YEAR]"
+        "stack": "Next.js · React"
       },
       "booking": {
         "name": "Moteur de réservation",
@@ -63,29 +60,23 @@
         "summary": "Les clients réservent sur le site ou par WhatsApp. Les rappels partent tout seuls.",
         "type": "Application web · concept",
         "for": "Cliniques, salons, salles de sport",
-        "stack": "[STACK]",
-        "year": "[YEAR]"
+        "stack": "Next.js · React"
       },
       "carRental": {
         "name": "CRM location auto",
         "kind": "Concept",
-        "summary": "[UNE PHRASE SUR LE PROJET]",
+        "summary": "Flotte, réservations et clients dans un seul tableau de bord.",
         "type": "CRM · concept",
         "for": "Agences de location de voitures",
-        "stack": "[STACK]",
-        "year": "[YEAR]"
+        "stack": "Next.js · React"
       },
       "yours": {
         "name": "Votre projet",
         "kind": "Le prochain ?",
-        "summary": "Votre site ici →",
-        "type": "[TYPE]",
-        "for": "Vous",
-        "stack": "[STACK]",
-        "year": "[YEAR]"
+        "summary": "Votre site ici →"
       }
     },
-    "videoPlaceholder": "Vidéo · [VIDEO]",
+    "videoPlaceholder": "Aperçu bientôt",
     "visitLabel": "Visiter {name} (s’ouvre dans un nouvel onglet)",
     "ctaLabel": "M’écrire sur WhatsApp à propos de votre projet"
   },
@@ -127,11 +118,7 @@
       }
     },
     "step3": "Votre budget",
-    "currencyIn": "En",
     "detected": "détecté : {country}",
-    "under": "Moins de {a}",
-    "range": "{a} – {b}",
-    "over": "{c} et plus",
     "notSure": "Pas encore sûr",
     "step4": "Pour quand ?",
     "timing": {
@@ -144,11 +131,12 @@
       "budget": "Budget",
       "timeline": "Délai",
       "send": "Envoyer sur WhatsApp",
-      "footer": "Je réponds avec un devis adapté à votre budget",
-      "startsAround": "Les projets commencent généralement autour de {x}"
+      "footer": "Je réponds avec un devis adapté à votre budget"
     },
-    "whatsapp": "Bonjour ! J'aimerais un(e) {need}{addons}. Budget : {budget}. Délai : {timeline}. [{country}]",
-    "currencyLabel": "Devise"
+    "whatsapp": "Bonjour ! J'aimerais un(e) {need}{addons}. Budget : {budget}. Délai : {timeline}.",
+    "currencyLabel": "Devise",
+    "amount": "Montant de votre budget",
+    "amountPlaceholder": "Montant (facultatif)"
   },
   "about": {
     "label": "04 — À propos & méthode",
@@ -157,11 +145,11 @@
     "role": "Développeur web · Maroc · EN/FR/AR",
     "fields": {
       "experience": "Expérience",
-      "experienceValue": "[ANNÉES] ans",
+      "experienceValue": "4+ ans",
       "client": "Client réel",
       "stack": "Stack",
       "studies": "Études",
-      "studiesValue": "[ÉCOLE / FILIÈRE]"
+      "studiesValue": "Licence en informatique"
     },
     "process": [
       {
@@ -188,8 +176,7 @@
     "front": "Recto de la carte",
     "back": "Verso de la carte",
     "whatsapp": "Bonjour ! J'aimerais demander l'accès (depuis votre portfolio)",
-    "photo": "[PHOTO]",
-    "photoAlt": "[DESCRIPTION DE LA PHOTO]",
+    "photoAlt": "Portrait en noir et blanc de Sharaf",
     "qrLabel": "QR code : discuter sur WhatsApp"
   },
   "contact": {
@@ -201,6 +188,6 @@
     "reply": "Je réponds en général sous {hours} h · il est {time} au Maroc",
     "madeIn": "Fait au Maroc",
     "rewind": "Revenir en haut ↑",
-    "email": "[EMAIL]"
+    "email": "charafeddinenaai@gmail.com"
   }
 }

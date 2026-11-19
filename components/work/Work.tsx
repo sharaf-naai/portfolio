@@ -53,6 +53,7 @@ export default function Work() {
   const wheel = useMedia(DESKTOP_MOTION);
   const goTo = useWheel(root, cardsRef, projects.length, setActive);
   const p = projects[active];
+  const details = "type" in p ? p : null; // "Your project" has no details rows
 
   return (
     <section
@@ -80,14 +81,14 @@ export default function Work() {
         </p>
         <h3 className="headline mt-2.5 text-[clamp(36px,min(4.4vw,7svh),64px)]">{p.name}</h3>
         <p className="mt-3.5 max-w-[380px] text-[17px] leading-[1.6] text-[#CFCCC5]">{p.summary}</p>
-        <dl className="label-mono mt-[22px] grid grid-cols-[80px_minmax(0,1fr)] text-[11px] tracking-[0.12em]">
-          {(["type", "for", "stack", "year"] as const).map((k) => (
+        {details && <dl className="label-mono mt-[22px] grid grid-cols-[80px_minmax(0,1fr)] text-[11px] tracking-[0.12em]">
+          {(["type", "for", "stack"] as const).map((k) => (
             <Fragment key={k}>
               <dt className="border-t border-[#2E2E2E] py-2 text-[#A9A7A1]">{t.fields[k]}</dt>
-              <dd className="m-0 border-t border-[#2E2E2E] py-2">{p[k]}</dd>
+              <dd className="m-0 border-t border-[#2E2E2E] py-2">{details[k]}</dd>
             </Fragment>
           ))}
-        </dl>
+        </dl>}
         <div className="mt-[26px] flex items-center gap-[18px]">
           {linkOf(active) ? (
             <a href={linkOf(active)!} target="_blank" rel="noopener noreferrer" className={`${PILL} btn-action`}>
@@ -167,7 +168,7 @@ export default function Work() {
                   <p className="card-num headline m-0 text-5xl">{`0${i + 1}`}</p>
                   <div>
                     <p className="headline m-0 text-[28px]">{proj.name}</p>
-                    <p className="label-mono mt-2.5 border-t pt-2 text-[10px] opacity-85" style={{ borderColor: th.line }}>{`${proj.kind} · ${proj.year}`}</p>
+                    <p className="label-mono mt-2.5 border-t pt-2 text-[10px] opacity-85" style={{ borderColor: th.line }}>{proj.kind}</p>
                   </div>
                 </div>
                 {cta ? (

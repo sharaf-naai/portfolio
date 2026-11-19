@@ -152,54 +152,17 @@ Design: canvas artboard "S5 v2 · Project brief". Paper background. Left column 
 
 1. **What do you need?** Pills: Website · Web app · CRM · Automation.
 2. **Add-ons** (checkboxes, no prices): Extra language · Booking system · WhatsApp automation · Edit it yourself (CMS) · SEO setup · Monthly care.
-3. **Your budget:** 4 ranges + "Not sure yet", plus a currency dropdown.
+3. **Your budget:** a currency dropdown + an amount the client types themselves (optional; empty = "Not sure yet"). No suggested ranges.
 4. **When do you need it?** ASAP · 1–2 months · No rush.
 
 The receipt and the WhatsApp message update live. Example message:
-`Hi! I'd like a website + booking system + extra language. Budget: 1,800–3,500 GBP. Timeline: 1–2 months. [GB]`
-The button opens `https://wa.me/<OWNER_NUMBER>?text=<encoded message>`.
+`Hi! I'd like a website + booking system + extra language. Budget: 15,000 MAD. Timeline: 1–2 months.`
+The button opens `https://wa.me/212681679598?text=<encoded message>`.
 
-### Budget ranges: decided by COUNTRY, never by currency
-- Detect the visitor's country:
-  1. `x-vercel-ip-country` header, read in middleware and stored in a `country` cookie. Detection is used only for display; don't store it anywhere else.
-  2. Fallback: `Intl.DateTimeFormat().resolvedOptions().timeZone` mapped to a country.
-  3. Fallback: `OTHER`.
-- The **country picks the ranges and the default currency**. The currency dropdown only **converts those same ranges** into another currency. Example: a Moroccan visitor who switches to EUR still sees Moroccan ranges, just shown in euros. Switching currency must never move a visitor into another country's ranges.
-- Conversion: EUR-based daily rates from a free exchange-rate API (one that includes MAD, XOF, AED, SAR, QAR, KWD), cached 24h, with static fallback rates in config. Round converted values to 2 significant figures ("nice" numbers).
-- The dropdown lists the currencies of the 20 countries below + USD. Label: "In: Dirham · MAD ▾", with a small Hand font note "auto-detected: Morocco".
-- Never show tier names or the word "tier" to visitors. Add the country code at the end of the WhatsApp message so the owner knows which ranges were shown.
-- Ranges below are for a **Website**. Multiply them for other needs, then round to 2 significant figures: **Automation ×0.6 · CRM ×2.5 · Web app ×3**. Add-ons don't change the ranges.
-- Band format: `Under A` · `A – B` · `B – C` · `C+` · `Not sure yet`.
-
-Starting values. **The owner reviews and adjusts these before launch.** Put them in `lib/pricing.ts`, one object per country: `{ currency, a, b, c }`.
-
-| Country | Code | Currency | A | B | C |
-|---|---|---|---|---|---|
-| Morocco | MA | MAD | 8,000 | 15,000 | 30,000 |
-| Senegal | SN | XOF | 500,000 | 1,000,000 | 2,000,000 |
-| Côte d'Ivoire | CI | XOF | 600,000 | 1,200,000 | 2,400,000 |
-| Portugal | PT | EUR | 1,200 | 2,500 | 5,000 |
-| Spain | ES | EUR | 1,500 | 3,000 | 6,000 |
-| Italy | IT | EUR | 1,500 | 3,000 | 6,000 |
-| France | FR | EUR | 2,000 | 4,000 | 8,000 |
-| Belgium | BE | EUR | 2,000 | 4,000 | 8,000 |
-| Germany | DE | EUR | 2,500 | 5,000 | 10,000 |
-| Netherlands | NL | EUR | 2,500 | 5,000 | 10,000 |
-| Ireland | IE | EUR | 2,500 | 5,000 | 10,000 |
-| United Kingdom | GB | GBP | 1,800 | 3,500 | 7,000 |
-| Canada | CA | CAD | 3,000 | 6,000 | 12,000 |
-| United Arab Emirates | AE | AED | 8,000 | 16,000 | 32,000 |
-| Saudi Arabia | SA | SAR | 8,000 | 16,000 | 32,000 |
-| Qatar | QA | QAR | 8,000 | 16,000 | 32,000 |
-| Kuwait | KW | KWD | 700 | 1,400 | 2,800 |
-| United States | US | USD | 3,000 | 6,000 | 12,000 |
-| Switzerland | CH | CHF | 3,000 | 6,000 | 12,000 |
-| Luxembourg | LU | EUR | 3,000 | 6,000 | 12,000 |
-| Any other country | OTHER | USD | 2,500 | 5,000 | 10,000 |
-
-Why these levels (2026 market checks for a small business website built by a freelancer): France freelance showcase sites ~€1,500–5,000; UK freelancer ~£800–3,000; US freelancer median ~$3–5k; Dubai small business sites ~AED 8–25k; Casablanca freelancer ~22k MAD for a mid-size site; Abidjan showcase sites 350k–1.5M FCFA. The ranges are the client's budget brackets, not a price list.
-
-- Optional line under the receipt: "Projects usually start around [X]". The owner decides whether to show it; it's off by default.
+### Budget: the client types it (owner decision, Nov 2026)
+- **No prices anywhere:** no suggested ranges, no "projects start around" line, no exchange rates. Pricing stays private.
+- The visitor's country (`x-vercel-ip-country` cookie → timezone → `OTHER`) only picks the **default currency** of the budget field (`lib/pricing.ts`). The dropdown lists the 11 currencies; the choice is kept across language switches.
+- Typed amounts are formatted with the locale's grouping and Western digits ("15,000 MAD").
 - The receipt footer reads: "I reply with a quote that fits your budget".
 
 ## 04 About: dark access card (swipe to flip)

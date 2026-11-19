@@ -22,8 +22,9 @@ export function useCardScroll(rootRef: RefObject<HTMLElement | null>, onHint: ()
     mm.add("(prefers-reduced-motion: no-preference)", () => {
       // Pin once the label + title + card block is centered on screen,
       // so the gap above the label equals the gap below the card.
-      const content = root.querySelector("[data-about-content]");
-      const centered = "center center";
+      // Taller than the screen (small phones): pin with its bottom in view, so the flip control stays reachable.
+      const content = root.querySelector("[data-about-content]") as HTMLElement;
+      const centered = () => (content.offsetHeight > window.innerHeight - 32 ? "bottom bottom-=16" : "center center");
       const rise = { trigger: content, start: "top 80%", end: centered, scrub: 0.25 };
 
       gsap.from(root.querySelector("[data-card-rise]"), { yPercent: 45, rotateX: 25, opacity: 0, ease: "power2.out", scrollTrigger: rise });

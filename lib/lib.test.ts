@@ -4,7 +4,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { stickSlip, tipAt, fiberPoints, basePose, RIP } from "./rip.ts";
 import { cardPose } from "./wheel.ts";
-import { nice, edges, bands, detectCountry, briefMessage, FALLBACK_RATES } from "./pricing.ts";
+import { formatBudget, detectCountry, briefMessage } from "./pricing.ts";
 
 test("stickSlip is monotonic, 0→1, with plateaus", () => {
   let prev = -1;
@@ -47,36 +47,23 @@ test("Arabic wheel is the mirror image", () => {
   assert.equal(rtl.angle, -ltr.angle);
 });
 
-test("pricing: 2 significant figures", () => {
-  assert.equal(nice(744), 740);
-  assert.equal(nice(1512), 1500);
-  assert.equal(nice(420), 420);
+test("budget: typed amount, grouped per locale, Western digits; empty = not sure", () => {
+  assert.equal(formatBudget("15000", "MAD"), "15,000 MAD");
+  assert.match(formatBudget("15000", "MAD", "ar")!, /^15[,.٬  ]?000 MAD$/);
+  assert.equal(formatBudget("", "EUR"), null);
+  assert.equal(formatBudget("0", "EUR"), null);
 });
 
-test("pricing: country picks the ranges, currency only converts them", () => {
-  const r = { ...FALLBACK_RATES, MAD: 10, EUR: 1 };
-  assert.deepEqual(edges("MA", "website", "MAD", r), [8000, 15000, 30000]);
-  assert.deepEqual(edges("MA", "crm", "MAD", r), [20000, 38000, 75000]); // ×2.5, rounded
-  assert.deepEqual(edges("MA", "website", "EUR", r), [800, 1500, 3000]); // Moroccan ranges, shown in euros
-  assert.notDeepEqual(edges("MA", "website", "EUR", r), edges("FR", "website", "EUR", r));
-  assert.deepEqual(edges("KW", "automation", "KWD", r), [420, 840, 1700]);
-});
-
-test("pricing: band labels and WhatsApp message come from the locale's copy", () => {
+test("WhatsApp brief comes from the locale's copy", () => {
   const en = JSON.parse(readFileSync("messages/en.json", "utf8")).services;
-  const ar = JSON.parse(readFileSync("messages/ar.json", "utf8")).services;
-  const b = bands([1800, 3500, 7000], "GBP", en);
-  assert.deepEqual(b, ["Under 1,800 GBP", "1,800 – 3,500 GBP", "3,500 – 7,000 GBP", "7,000+ GBP"]);
   assert.equal(
-    briefMessage(en.whatsapp, { need: en.needs.website, addons: [en.addons.booking.name, en.addons.lang.name], budget: b[1], time: en.timing.soon, country: "GB" }),
-    "Hi! I'd like a website + booking system + extra language. Budget: 1,800–3,500 GBP. Timeline: 1–2 months. [GB]",
+    briefMessage(en.whatsapp, { need: en.needs.website, addons: [en.addons.booking.name, en.addons.lang.name], budget: "15,000 MAD", time: en.timing.soon }),
+    "Hi! I'd like a website + booking system + extra language. Budget: 15,000 MAD. Timeline: 1–2 months.",
   );
-  assert.equal(briefMessage(en.whatsapp, { need: en.needs.crm, addons: [], budget: "x", time: "y", country: "MA" }).includes("a CRM."), true);
-  // Arabic wording, Western digits
-  assert.match(bands([8000, 15000, 30000], "MAD", ar, "ar")[0], /^أقل من 8[,.٬]?000 MAD$/);
+  assert.equal(briefMessage(en.whatsapp, { need: en.needs.crm, addons: [], budget: en.notSure, time: "y" }).includes("a CRM."), true);
 });
 
-test("pricing: detection order cookie → timezone → OTHER", () => {
+test("country detection order cookie → timezone → OTHER", () => {
   assert.equal(detectCountry("a=1; country=FR", "Africa/Casablanca"), "FR");
   assert.equal(detectCountry("country=ZZ", "Africa/Casablanca"), "MA"); // unknown cookie value ignored
   assert.equal(detectCountry("", "Asia/Tokyo"), "OTHER");

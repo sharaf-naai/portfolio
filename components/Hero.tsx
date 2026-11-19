@@ -48,7 +48,7 @@ export default function Hero() {
             <span>{t.year}</span>
           </div>
           {/* Spec: clamp(120px, 16vw, 250px). Phones get a smaller floor so the name stays on one line. */}
-          <h1 className="headline mt-1.5 text-center text-[clamp(72px,16vw,250px)] whitespace-nowrap text-ink max-md:text-[clamp(64px,22vw,120px)]">
+          <h1 className="headline mt-1.5 text-center text-[clamp(72px,16vw,250px)] whitespace-nowrap text-ink max-md:text-[clamp(56px,20vw,120px)]">
             <span className="sr-only">{t.name}</span>
             <span aria-hidden="true">
               {/* The drawn head is 40% taller than the capitals and centered on them.
@@ -65,7 +65,7 @@ export default function Hero() {
           <svg aria-hidden="true" width="34" height="46" viewBox="0 0 34 46" fill="none" stroke="var(--color-pen)" strokeWidth="2" strokeLinecap="round" className="rtl:-scale-x-100">
             <path d="M28 42 C6 40 4 22 10 4 M4 12 L10 3 L16 11" />
           </svg>
-          <span data-note className="inline-block -rotate-4 font-hand text-[40px] leading-none text-pen">
+          <span data-note className="inline-block -rotate-4 font-hand text-[clamp(32px,10vw,40px)] leading-none text-balance text-pen">
             {t.note}
           </span>
         </div>

@@ -35,18 +35,16 @@
     "fields": {
       "type": "Type",
       "for": "For",
-      "stack": "Stack",
-      "year": "Year"
+      "stack": "Stack"
     },
     "projects": {
       "restaurant": {
         "name": "Restaurant site",
         "kind": "Concept",
-        "summary": "[ONE SENTENCE ABOUT THE PROJECT]",
+        "summary": "Menu, photos and table booking, built for a restaurant.",
         "type": "Website · concept",
         "for": "Restaurants",
-        "stack": "[STACK]",
-        "year": "[YEAR]"
+        "stack": "Next.js · React"
       },
       "hanabaly": {
         "name": "Hanabaly",
@@ -54,8 +52,7 @@
         "summary": "An appointment platform for doctors and psychologists.",
         "type": "Web app · real client",
         "for": "Doctors, psychologists",
-        "stack": "[STACK]",
-        "year": "[YEAR]"
+        "stack": "Next.js · React"
       },
       "booking": {
         "name": "Booking engine",
@@ -63,29 +60,23 @@
         "summary": "Customers book on the site or by WhatsApp. Reminders go out on their own.",
         "type": "Web app · concept",
         "for": "Clinics, salons, gyms",
-        "stack": "[STACK]",
-        "year": "[YEAR]"
+        "stack": "Next.js · React"
       },
       "carRental": {
         "name": "Car rental CRM",
         "kind": "Concept",
-        "summary": "[ONE SENTENCE ABOUT THE PROJECT]",
+        "summary": "Fleet, bookings and customers in one dashboard.",
         "type": "CRM · concept",
         "for": "Car rental agencies",
-        "stack": "[STACK]",
-        "year": "[YEAR]"
+        "stack": "Next.js · React"
       },
       "yours": {
         "name": "Your project",
         "kind": "Next?",
-        "summary": "Your site here →",
-        "type": "[TYPE]",
-        "for": "You",
-        "stack": "[STACK]",
-        "year": "[YEAR]"
+        "summary": "Your site here →"
       }
     },
-    "videoPlaceholder": "Video · [VIDEO]",
+    "videoPlaceholder": "Preview coming soon",
     "visitLabel": "Visit {name} (opens in a new tab)",
     "ctaLabel": "Message me on WhatsApp about your project"
   },
@@ -127,11 +118,7 @@
       }
     },
     "step3": "Your budget",
-    "currencyIn": "In",
     "detected": "auto-detected: {country}",
-    "under": "Under {a}",
-    "range": "{a} – {b}",
-    "over": "{c}+",
     "notSure": "Not sure yet",
     "step4": "When do you need it?",
     "timing": {
@@ -144,11 +131,12 @@
       "budget": "Budget",
       "timeline": "Timeline",
       "send": "Send on WhatsApp",
-      "footer": "I reply with a quote that fits your budget",
-      "startsAround": "Projects usually start around {x}"
+      "footer": "I reply with a quote that fits your budget"
     },
-    "whatsapp": "Hi! I'd like a {need}{addons}. Budget: {budget}. Timeline: {timeline}. [{country}]",
-    "currencyLabel": "Currency"
+    "whatsapp": "Hi! I'd like a {need}{addons}. Budget: {budget}. Timeline: {timeline}.",
+    "currencyLabel": "Currency",
+    "amount": "Your budget amount",
+    "amountPlaceholder": "Amount (optional)"
   },
   "about": {
     "label": "04 — About & process",
@@ -157,11 +145,11 @@
     "role": "Web developer · Morocco · EN/FR/AR",
     "fields": {
       "experience": "Experience",
-      "experienceValue": "[YEARS] years",
+      "experienceValue": "4+ years",
       "client": "Real client",
       "stack": "Stack",
       "studies": "Studies",
-      "studiesValue": "[SCHOOL / FIELD]"
+      "studiesValue": "Bachelor's, computer science"
     },
     "process": [
       {
@@ -188,8 +176,7 @@
     "front": "Front of card",
     "back": "Back of card",
     "whatsapp": "Hi! I'd like to request access (from your portfolio)",
-    "photo": "[PHOTO]",
-    "photoAlt": "[PHOTO DESCRIPTION]",
+    "photoAlt": "Black-and-white portrait of Sharaf",
     "qrLabel": "QR code: chat on WhatsApp"
   },
   "contact": {
@@ -201,6 +188,6 @@
     "reply": "Usually replies within {hours} hours · it's {time} in Morocco",
     "madeIn": "Made in Morocco",
     "rewind": "Rewind to top ↑",
-    "email": "[EMAIL]"
+    "email": "charafeddinenaai@gmail.com"
   }
 }
