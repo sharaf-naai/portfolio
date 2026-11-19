@@ -3,11 +3,12 @@
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { gsap } from "gsap";
 import { dragTilt, releaseFlips } from "@/lib/flip";
-import { play } from "@/lib/sound";
 
 const PAD = 6; // track padding (px), must match AccessCard's p-1.5
 const clamp01 = (v: number) => Math.min(Math.max(v, 0), 1);
 const reduced = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+// Arabic: the knob slides right → left and the card turns the other way.
+const side = () => (document.dir === "rtl" ? -1 : 1);
 
 /**
  * Swipe-to-flip: the knob drags along the track, the card tilts with it (up to 25° at 60%),
@@ -32,7 +33,7 @@ export function useFlip(cardRef: RefObject<HTMLDivElement | null>) {
 
   function setKnob(p: number, spring?: string) {
     s.p = clamp01(p);
-    const to = { x: s.p * range() };
+    const to = { x: side() * s.p * range() };
     if (spring) gsap.to(knobRef.current, { ...to, duration: 0.6, ease: spring });
     else gsap.set(knobRef.current, to);
     gsap.to(label(), { opacity: 1 - Math.min(s.p * 1.6, 1), duration: spring ? 0.3 : 0 });
@@ -40,7 +41,7 @@ export function useFlip(cardRef: RefObject<HTMLDivElement | null>) {
 
   function follow(p: number) {
     setKnob(p);
-    if (!reduced()) gsap.set(cardRef.current, { rotateY: dragTilt(s.p) });
+    if (!reduced()) gsap.set(cardRef.current, { rotateY: side() * dragTilt(s.p) });
   }
 
   function turn(toBack: boolean) {
@@ -50,14 +51,13 @@ export function useFlip(cardRef: RefObject<HTMLDivElement | null>) {
     s.touched = true;
     gsap.killTweensOf([card, knobRef.current]);
     setKnob(toBack ? 1 : 0, "power3.out");
-    play("cardFlip");
     if (reduced()) {
       gsap.to(card.querySelector("[data-front]"), { opacity: toBack ? 0 : 1, duration: 0.35 });
       gsap.to(card.querySelector("[data-back]"), { opacity: toBack ? 1 : 0, duration: 0.35 });
     } else {
       gsap
         .timeline()
-        .to(card, { rotateY: toBack ? 180 : 0, duration: 0.9, ease: "back.out(1.5)" }, 0)
+        .to(card, { rotateY: toBack ? side() * 180 : 0, duration: 0.9, ease: "back.out(1.5)" }, 0)
         .to(card, { z: 90, duration: 0.45, ease: "power2.out", yoyo: true, repeat: 1 }, 0) // lifts toward the viewer mid-flip
         // Shadow narrows and softens as the card goes edge-on and lifts, then settles back.
         .to(card.closest("[data-card-stage]")!.querySelector("[data-card-shadow]"), { scaleX: 0.5, opacity: 0.4, duration: 0.45, ease: "power2.out", yoyo: true, repeat: 1 }, 0);
@@ -82,7 +82,7 @@ export function useFlip(cardRef: RefObject<HTMLDivElement | null>) {
     onPointerMove(e: React.PointerEvent<HTMLButtonElement>) {
       const d = s.drag;
       if (!d) return;
-      const dx = e.clientX - d.x0;
+      const dx = side() * (e.clientX - d.x0);
       if (Math.abs(dx) > 3) d.moved = true;
       follow(d.p0 + dx / range());
     },
@@ -102,7 +102,7 @@ export function useFlip(cardRef: RefObject<HTMLDivElement | null>) {
       turn(true);
     },
     onKeyDown(e: React.KeyboardEvent) {
-      const step = e.key === "ArrowRight" ? 0.2 : e.key === "ArrowLeft" ? -0.2 : 0;
+      const step = (e.key === "ArrowRight" ? 0.2 : e.key === "ArrowLeft" ? -0.2 : 0) * side();
       if (!step) return;
       e.preventDefault();
       s.touched = true;
@@ -114,7 +114,7 @@ export function useFlip(cardRef: RefObject<HTMLDivElement | null>) {
   /** Scroll hint: nudge the knob right twice, unless the visitor already touched it. */
   function nudge() {
     if (s.touched || s.flipped || reduced()) return;
-    gsap.to(knobRef.current, { x: "+=12", duration: 0.22, ease: "power1.inOut", yoyo: true, repeat: 3 });
+    gsap.to(knobRef.current, { x: side() > 0 ? "+=12" : "-=12", duration: 0.22, ease: "power1.inOut", yoyo: true, repeat: 3 });
   }
 
   return { flipped, knobRef, trackRef, backRef, knob, flipBack: () => turn(false), nudge };

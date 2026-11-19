@@ -1,7 +1,7 @@
 "use client";
 
 import { Fragment, useEffect, useRef, useState } from "react";
-import messages from "@/messages/en.json";
+import { useMessages } from "next-intl";
 import { WHEEL } from "@/lib/wheel";
 import { PROJECT_URLS } from "@/lib/projects";
 import { whatsappUrl } from "@/lib/pricing";
@@ -9,22 +9,22 @@ import Grain from "../Grain";
 import CardVideo from "./CardVideo";
 import { useWheel, WHEEL_QUERY } from "./useWheel";
 
-const t = messages.work;
-const CTA = t.projects.length - 1; // "Your project": opens WhatsApp
-const linkOf = (i: number) => (i === CTA ? whatsappUrl(messages.contact.waMessage) : PROJECT_URLS[i]);
-const PILL = "inline-flex min-h-11 items-center rounded-full bg-bone px-5 text-[13px] font-extrabold tracking-[0.04em] text-ink uppercase [font-stretch:112%]";
+// Same order as the cards; the last one, "Your project", opens WhatsApp.
+const IDS = ["restaurant", "hanabaly", "booking", "carRental", "yours"] as const;
+const CTA = IDS.length - 1;
+const PILL = "btn inline-flex min-h-11 items-center rounded-full px-5";
 
 const THEMES = {
   paper: { bg: "#F1F0EC", fg: "#141414", line: "rgba(20,20,20,0.18)" },
   ink: { bg: "#121212", fg: "#EDEBE6", line: "rgba(237,235,230,0.18)" },
-  red: { bg: "#E0281E", fg: "#FFF6F2", line: "rgba(255,246,242,0.35)" },
+  pen: { bg: "#2450F0", fg: "#F4F6FF", line: "rgba(244,246,255,0.35)" }, // red stays reserved for the PLAYING chip
 };
 
 // Media per project, same order as messages.work.projects. Add video/poster paths (e.g. /assets/videos/hanabaly.mp4) when recorded.
 const MEDIA: { theme: keyof typeof THEMES; shot: string; video?: string; poster?: string }[] = [
   { theme: "paper", shot: "linear-gradient(135deg,#B5482E,#2A120C)" },
   { theme: "ink", shot: "linear-gradient(135deg,#2E5E5A,#0E1414)" },
-  { theme: "red", shot: "linear-gradient(135deg,#3D6BFF,#0B0E1A)" },
+  { theme: "pen", shot: "linear-gradient(135deg,#3D6BFF,#0B0E1A)" },
   { theme: "ink", shot: "linear-gradient(135deg,#F2A81D,#2A1A06)" },
   { theme: "paper", shot: "" }, // "Your project": dashed call-to-action, no video
 ];
@@ -42,13 +42,16 @@ function useMedia(query: string) {
 }
 
 export default function Work() {
+  const { work: t, contact } = useMessages();
+  const projects = IDS.map((id) => t.projects[id]);
+  const linkOf = (i: number) => (i === CTA ? whatsappUrl(contact.whatsappText) : PROJECT_URLS[i]);
   const root = useRef<HTMLElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
   const [hovered, setHovered] = useState<number | null>(null);
   const wheel = useMedia(WHEEL_QUERY);
-  const goTo = useWheel(root, cardsRef, t.projects.length, setActive);
-  const p = t.projects[active];
+  const goTo = useWheel(root, cardsRef, projects.length, setActive);
+  const p = projects[active];
 
   return (
     <section
@@ -58,7 +61,7 @@ export default function Work() {
       className="relative z-0 overflow-hidden px-4 py-24 text-bone"
       style={{
         background: [
-          "radial-gradient(45% 50% at 70% 50%, rgba(47,183,168,0.28), transparent 70%)",
+          "radial-gradient(45% 50% at 70% 50%, var(--color-blue-glow), transparent 70%)",
           "radial-gradient(35% 40% at 15% 85%, rgba(242,168,29,0.18), transparent 70%)",
           "linear-gradient(180deg, var(--color-night), var(--color-night-deep))",
         ].join(", "),
@@ -66,49 +69,50 @@ export default function Work() {
     >
       <Grain opacity={0.18} blend="screen" />
 
-      <h2 className="work-stack-only label-mono relative mb-10 text-center text-[11px] tracking-[0.14em] text-red-light">{t.label}</h2>
+      <h2 className="work-stack-only label-mono relative mb-10 text-center text-[12px] text-pen-light">{t.label}</h2>
 
       {/* Active project panel (wheel mode only) */}
-      <div className="work-panel absolute top-16 left-16 z-20 hidden w-[clamp(260px,29vw,420px)]">
-        <p className="label-mono mb-[18px] text-[11px] tracking-[0.14em] text-red-light">{t.label}</p>
+      <div className="work-panel absolute top-16 start-16 z-20 hidden w-[clamp(260px,29vw,420px)]">
+        <p className="label-mono mb-[18px] text-[12px] text-pen-light">{t.label}</p>
         <p aria-hidden="true" className="headline text-[clamp(72px,min(10.4vw,15svh),150px)] leading-[0.85] text-transparent [-webkit-text-stroke:1.5px_var(--color-bone)]">
           {`0${active + 1}`}
         </p>
-        <h3 className="headline mt-2.5 text-[clamp(30px,min(3.75vw,6svh),54px)] leading-[0.92]">{p.name}</h3>
-        <p className="mt-3.5 max-w-[360px] font-mono text-[13px] leading-[1.7] text-[#CFCCC5]">{p.sentence}</p>
-        <dl className="label-mono mt-[22px] grid grid-cols-[80px_minmax(0,1fr)] text-[11px] tracking-[0.08em]">
+        <h3 className="headline mt-2.5 text-[clamp(36px,min(4.4vw,7svh),64px)]">{p.name}</h3>
+        <p className="mt-3.5 max-w-[380px] text-[17px] leading-[1.6] text-[#CFCCC5]">{p.summary}</p>
+        <dl className="label-mono mt-[22px] grid grid-cols-[80px_minmax(0,1fr)] text-[11px] tracking-[0.12em]">
           {(["type", "for", "stack", "year"] as const).map((k) => (
             <Fragment key={k}>
-              <dt className="border-t border-[#2E2E2E] py-2 text-[#A9A7A1]">{t.details[k]}</dt>
+              <dt className="border-t border-[#2E2E2E] py-2 text-[#A9A7A1]">{t.fields[k]}</dt>
               <dd className="m-0 border-t border-[#2E2E2E] py-2">{p[k]}</dd>
             </Fragment>
           ))}
         </dl>
         <div className="mt-[26px] flex items-center gap-[18px]">
           {linkOf(active) ? (
-            <a href={linkOf(active)!} target="_blank" rel="noopener noreferrer" className={PILL}>
-              {active === CTA ? messages.contact.whatsapp : t.visitSite}
+            <a href={linkOf(active)!} target="_blank" rel="noopener noreferrer" className={`${PILL} btn-action`}>
+              {active === CTA ? contact.whatsapp : t.visit}
             </a>
           ) : (
-            <span aria-disabled="true" className={`${PILL} opacity-50`}>
+            <span aria-disabled="true" className={`${PILL} bg-bone/15 text-bone/70`}>
               {t.comingSoon}
             </span>
           )}
         </div>
+        <p className="mt-4 font-hand text-[26px] leading-none text-pen-light">{t.hint}</p>
       </div>
 
-      {/* Project list, right of the wheel and vertically centred so the bottom bar never covers it (wheel mode only) */}
-      <div className="work-panel absolute top-1/2 right-[clamp(16px,4vw,64px)] z-20 hidden -translate-y-1/2">
+      {/* Project list, on the far side of the wheel, vertically centred (wheel mode only) */}
+      <div className="work-panel absolute top-1/2 end-[clamp(16px,4vw,64px)] z-20 hidden -translate-y-1/2">
         <ol className="flex flex-col gap-2.5">
-          {t.projects.map((proj, i) => (
-            <li key={proj.name}>
+          {projects.map((proj, i) => (
+            <li key={IDS[i]}>
               <button
                 type="button"
                 onClick={() => goTo(i)}
                 aria-current={i === active || undefined}
                 className={`label-mono flex min-h-6 items-center gap-3 text-[11px] ${i === active ? "text-bone" : "text-[#8E8C87]"}`}
               >
-                <span aria-hidden="true" className={`h-0.5 transition-all ${i === active ? "w-7 bg-red" : "w-3 bg-[#5A5854]"}`} />
+                <span aria-hidden="true" className={`h-0.5 transition-all ${i === active ? "w-7 bg-pen-light" : "w-3 bg-[#5A5854]"}`} />
                 {`0${i + 1} ${proj.name}`}
               </button>
             </li>
@@ -121,14 +125,14 @@ export default function Work() {
         className="wheel-cards relative flex flex-col items-center gap-10"
         style={{ "--cx": `${WHEEL.cx}px`, "--r": `${WHEEL.r}px`, "--step": `${WHEEL.step}deg` } as React.CSSProperties}
       >
-        {t.projects.map((proj, i) => {
+        {projects.map((proj, i) => {
           const m = MEDIA[i];
           const th = THEMES[m.theme];
           const isActive = wheel && i === active;
-          const cta = "cta" in proj ? proj.cta : null;
+          const cta = i === CTA ? proj.summary : null;
           return (
             <article
-              key={proj.name}
+              key={IDS[i]}
               aria-label={proj.name}
               data-active={isActive}
               onMouseEnter={() => setHovered(i)}
@@ -140,7 +144,7 @@ export default function Work() {
                 {[0, 1, 2].map((d) => (
                   <span key={d} aria-hidden="true" className="size-[7px] rounded-full border-[1.5px] border-current" />
                 ))}
-                <span className="label-mono ml-2.5 text-[10px] tracking-[0.12em] opacity-80">{`0${i + 1} · ${proj.kind}`}</span>
+                <span className="label-mono ms-2.5 text-[10px] opacity-80">{`0${i + 1} · ${proj.kind}`}</span>
               </div>
               {/* Stretched link: the whole card opens the live site (or WhatsApp for "Your project"). */}
               {linkOf(i) && (
@@ -153,7 +157,7 @@ export default function Work() {
                 />
               )}
               {isActive && !cta && (
-                <span className="label-mono absolute top-10 right-3.5 z-[2] rounded bg-red px-2 py-1.5 text-[10px] tracking-[0.12em] text-[#FFF6F2]">
+                <span className="label-mono absolute top-10 end-3.5 z-[2] rounded bg-action px-2 py-1.5 text-[10px] text-[#FFF6F2]">
                   {PROJECT_URLS[i] ? t.playing : t.comingSoon}
                 </span>
               )}
@@ -161,12 +165,12 @@ export default function Work() {
                 <div className="flex flex-col justify-between gap-4">
                   <p className="card-num headline m-0 text-5xl">{`0${i + 1}`}</p>
                   <div>
-                    <p className="m-0 text-[22px] leading-none font-black uppercase [font-stretch:112%]">{proj.name}</p>
+                    <p className="headline m-0 text-[28px]">{proj.name}</p>
                     <p className="label-mono mt-2.5 border-t pt-2 text-[10px] opacity-85" style={{ borderColor: th.line }}>{`${proj.kind} · ${proj.year}`}</p>
                   </div>
                 </div>
                 {cta ? (
-                  <span className="flex min-h-40 items-center justify-center rounded-lg border-2 border-dashed font-hand text-[30px]" style={{ borderColor: th.line }}>
+                  <span className="flex min-h-40 items-center justify-center rounded-lg border-2 border-dashed font-hand text-[40px] text-pen" style={{ borderColor: th.line }}>
                     {cta}
                   </span>
                 ) : (
@@ -182,7 +186,7 @@ export default function Work() {
                   />
                 )}
               </div>
-              <p className="work-stack-only px-3.5 pb-3.5 font-mono text-[13px] leading-[1.6] opacity-80">{proj.sentence}</p>
+              <p className="work-stack-only px-3.5 pb-3.5 text-[17px] leading-[1.6] opacity-80">{proj.summary}</p>
             </article>
           );
         })}

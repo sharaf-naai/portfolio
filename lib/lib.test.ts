@@ -1,8 +1,8 @@
 // Run: node --test lib/
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { stickSlip, tipAt, fiberPoints, basePose, RIP } from "./rip.ts";
-import { crossingGuard } from "./crossings.ts";
 import { cardPose } from "./wheel.ts";
 import { nice, edges, bands, detectCountry, briefMessage, FALLBACK_RATES } from "./pricing.ts";
 
@@ -32,38 +32,19 @@ test("halves start at rest and open a wedge", () => {
   assert.ok(basePose(0.3, "left").rz > 0 && basePose(0.3, "right").rz < 0);
 });
 
-test("crossing guard fires once per crossing, by direction", () => {
-  const fired: string[] = [];
-  const update = crossingGuard([
-    { at: 0.25, dir: "down", name: "rip1" },
-    { at: 0.25, dir: "up", name: "rustle" },
-  ]);
-  const step = (p: number, t: number) => update(p, t, (n) => fired.push(n));
-  step(0.2, 0);
-  step(0.3, 10); // down → rip1
-  step(0.31, 20); // no crossing
-  step(0.2, 30); // jitter back up within cooldown → quiet
-  step(0.3, 50); // and down again → quiet
-  step(0.2, 400); // real scroll up → rustle
-  step(0.3, 800); // real scroll down → rip1
-  assert.deepEqual(fired, ["rip1", "rustle", "rip1"]);
-
-  const solo: string[] = [];
-  const u2 = crossingGuard([{ at: 0.5, dir: "down", name: "x" }]);
-  u2(0.4, 0, (n) => solo.push(n));
-  u2(0.6, 0, (n) => solo.push(n));
-  u2(0.4, 10, (n) => solo.push(n));
-  u2(0.6, 20, (n) => solo.push(n)); // same trigger within cooldown → suppressed
-  u2(0.4, 400, (n) => solo.push(n));
-  u2(0.6, 500, (n) => solo.push(n));
-  assert.deepEqual(solo, ["x", "x"]);
-});
-
 test("active card sits at 0° to the right of the panel", () => {
   const p = cardPose(0, 0, 1440, 960);
   assert.equal(p.angle, 0);
   assert.equal(p.x, 850);
   assert.equal(p.y, 480);
+});
+
+test("Arabic wheel is the mirror image", () => {
+  const ltr = cardPose(2, 0.5, 1440, 960);
+  const rtl = cardPose(2, 0.5, 1440, 960, -1);
+  assert.equal(rtl.x, 1440 - ltr.x);
+  assert.equal(rtl.y, ltr.y);
+  assert.equal(rtl.angle, -ltr.angle);
 });
 
 test("pricing: 2 significant figures", () => {
@@ -81,13 +62,18 @@ test("pricing: country picks the ranges, currency only converts them", () => {
   assert.deepEqual(edges("KW", "automation", "KWD", r), [420, 840, 1700]);
 });
 
-test("pricing: band labels and WhatsApp message", () => {
-  const b = bands([1800, 3500, 7000], "GBP");
+test("pricing: band labels and WhatsApp message come from the locale's copy", () => {
+  const en = JSON.parse(readFileSync("messages/en.json", "utf8")).services;
+  const ar = JSON.parse(readFileSync("messages/ar.json", "utf8")).services;
+  const b = bands([1800, 3500, 7000], "GBP", en);
   assert.deepEqual(b, ["Under 1,800 GBP", "1,800 – 3,500 GBP", "3,500 – 7,000 GBP", "7,000+ GBP"]);
   assert.equal(
-    briefMessage({ need: "a website", addons: ["booking system", "extra language"], budget: b[1], time: "1–2 months", country: "GB" }),
+    briefMessage(en.whatsapp, { need: en.needs.website, addons: [en.addons.booking.name, en.addons.lang.name], budget: b[1], time: en.timing.soon, country: "GB" }),
     "Hi! I'd like a website + booking system + extra language. Budget: 1,800–3,500 GBP. Timeline: 1–2 months. [GB]",
   );
+  assert.equal(briefMessage(en.whatsapp, { need: en.needs.crm, addons: [], budget: "x", time: "y", country: "MA" }).includes("a CRM."), true);
+  // Arabic wording, Western digits
+  assert.match(bands([8000, 15000, 30000], "MAD", ar, "ar")[0], /^أقل من 8[,.٬]?000 MAD$/);
 });
 
 test("pricing: detection order cookie → timezone → OTHER", () => {

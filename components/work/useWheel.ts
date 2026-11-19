@@ -4,7 +4,6 @@ import { useEffect, useRef, type RefObject } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { wheelScale } from "@/lib/wheel";
-import { play } from "@/lib/sound";
 import { useLenis } from "../LenisProvider";
 
 /** Must match the wheel block in globals.css. */
@@ -59,7 +58,6 @@ export function useWheel(rootRef: RefObject<HTMLElement | null>, cardsRef: RefOb
           if (i !== active) {
             active = i;
             onActiveRef.current(i);
-            play("click");
           }
         },
       });

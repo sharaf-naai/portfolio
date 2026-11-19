@@ -1,308 +1,206 @@
 {
   "meta": {
-    "title": "SHARAF — Developer / Builder",
-    "description": "Websites, web apps and CRMs, built in Morocco."
+    "title": "Sharaf — Web developer, Morocco",
+    "description": "Websites, web apps and CRMs, designed and built by Sharaf. Based in Morocco, working with clients anywhere."
+  },
+  "controls": {
+    "language": "Language",
+    "skipToContact": "Skip to contact",
+    "ringProgress": "Scroll progress {p}%. Go to next part",
+    "ringTop": "Back to top",
+    "ringHint": "next ↓"
+  },
+  "loader": {
+    "messages": [
+      "sharpening pencils…",
+      "drawing your host…",
+      "almost there"
+    ],
+    "loading": "Loading"
   },
   "hero": {
-    "kicker": "Developer / Builder",
+    "role": "Developer / Builder",
     "year": "2026",
-    "name": "SHARAF",
-    "portraitAlt": "Ink portrait",
+    "name": "Sharaf",
     "note": "ok, scroll and rip it",
-    "behind": "Websites",
-    "polaroids": [
-      {
-        "caption": "Hanabaly ✓ real",
-        "alt": "Screenshot placeholder: Hanabaly"
-      },
-      {
-        "caption": "booking engine",
-        "alt": "Screenshot placeholder: Booking / WhatsApp engine"
-      },
-      {
-        "caption": "car rental CRM",
-        "alt": "Screenshot placeholder: Car rental CRM"
-      }
-    ]
-  },
-  "timeline": {
-    "chapters": [
-      {
-        "id": "hero",
-        "label": "Hero"
-      },
-      {
-        "id": "work",
-        "label": "Work"
-      },
-      {
-        "id": "services",
-        "label": "Services"
-      },
-      {
-        "id": "about",
-        "label": "About"
-      },
-      {
-        "id": "contact",
-        "label": "Contact"
-      }
-    ],
-    "skipToContact": "Skip to contact",
-    "progressLabel": "Scroll progress {pct}%. Go to next part",
-    "backToTop": "Back to top",
-    "next": "next ↓",
-    "soundLabel": "Sound",
-    "soundOnNote": "sound on",
-    "soundOffNote": "sound off"
+    "bigWord": "Websites"
   },
   "work": {
     "label": "02 — Selected work",
+    "hint": "Hover = preview · Click = visit the site",
+    "visit": "Visit site ↗",
+    "cursor": "Visit ↗",
     "playing": "▶ Playing",
-    "videoPlaceholder": "IMG · video loop",
-    "details": {
+    "comingSoon": "Coming soon",
+    "fields": {
       "type": "Type",
       "for": "For",
       "stack": "Stack",
       "year": "Year"
     },
-    "projects": [
-      {
+    "projects": {
+      "restaurant": {
         "name": "Restaurant site",
         "kind": "Concept",
-        "year": "[YEAR]",
-        "sentence": "[ONE SENTENCE]",
+        "summary": "[ONE SENTENCE ABOUT THE PROJECT]",
         "type": "Website · concept",
         "for": "Restaurants",
-        "stack": "[STACK]"
+        "stack": "[STACK]",
+        "year": "[YEAR]"
       },
-      {
+      "hanabaly": {
         "name": "Hanabaly",
         "kind": "Real client",
-        "year": "[YEAR]",
-        "sentence": "An appointment platform for doctors and psychologists.",
+        "summary": "An appointment platform for doctors and psychologists.",
         "type": "Web app · real client",
         "for": "Doctors, psychologists",
-        "stack": "[STACK]"
+        "stack": "[STACK]",
+        "year": "[YEAR]"
       },
-      {
+      "booking": {
         "name": "Booking engine",
         "kind": "Concept",
-        "year": "[YEAR]",
-        "sentence": "Customers book on the site or by WhatsApp. Reminders go out on their own.",
+        "summary": "Customers book on the site or by WhatsApp. Reminders go out on their own.",
         "type": "Web app · concept",
         "for": "Clinics, salons, gyms",
-        "stack": "[STACK]"
+        "stack": "[STACK]",
+        "year": "[YEAR]"
       },
-      {
+      "carRental": {
         "name": "Car rental CRM",
         "kind": "Concept",
-        "year": "[YEAR]",
-        "sentence": "[ONE SENTENCE]",
+        "summary": "[ONE SENTENCE ABOUT THE PROJECT]",
         "type": "CRM · concept",
         "for": "Car rental agencies",
-        "stack": "[STACK]"
+        "stack": "[STACK]",
+        "year": "[YEAR]"
       },
-      {
+      "yours": {
         "name": "Your project",
         "kind": "Next?",
-        "year": "[YEAR]",
-        "sentence": "[ONE SENTENCE]",
+        "summary": "Your site here →",
         "type": "[TYPE]",
         "for": "You",
         "stack": "[STACK]",
-        "cta": "your site here →"
+        "year": "[YEAR]"
       }
-    ],
-    "visitSite": "Visit site ↗",
-    "comingSoon": "Coming soon",
+    },
+    "videoPlaceholder": "Video · [VIDEO]",
     "visitLabel": "Visit {name} (opens in a new tab)",
     "ctaLabel": "Message me on WhatsApp about your project"
   },
   "services": {
     "label": "03 — Services",
     "title": "Build your brief.",
-    "steps": {
-      "need": "1 · What do you need?",
-      "addons": "2 · Add-ons",
-      "budget": "3 · Your budget",
-      "time": "4 · When do you need it?"
+    "step1": "What do you need?",
+    "needs": {
+      "website": "Website",
+      "webApp": "Web app",
+      "crm": "CRM",
+      "automation": "Automation"
     },
-    "needs": [
-      {
-        "id": "website",
-        "label": "Website",
-        "phrase": "a website"
-      },
-      {
-        "id": "webapp",
-        "label": "Web app",
-        "phrase": "a web app"
-      },
-      {
-        "id": "crm",
-        "label": "CRM",
-        "phrase": "a CRM"
-      },
-      {
-        "id": "automation",
-        "label": "Automation",
-        "phrase": "an automation"
-      }
-    ],
-    "addons": [
-      {
-        "id": "lang",
+    "step2": "Add-ons",
+    "addons": {
+      "lang": {
         "name": "Extra language",
-        "desc": "French / Arabic version",
-        "phrase": "extra language"
+        "desc": "French / Arabic version"
       },
-      {
-        "id": "booking",
+      "booking": {
         "name": "Booking system",
-        "desc": "Customers book online",
-        "phrase": "booking system"
+        "desc": "Customers book online"
       },
-      {
-        "id": "wa",
+      "whatsapp": {
         "name": "WhatsApp automation",
-        "desc": "Reminders + replies",
-        "phrase": "WhatsApp automation"
+        "desc": "Reminders and replies"
       },
-      {
-        "id": "cms",
-        "name": "Edit it yourself (CMS)",
-        "desc": "Simple admin for texts",
-        "phrase": "a CMS to edit it myself"
+      "cms": {
+        "name": "Edit it yourself",
+        "desc": "Simple admin for your texts"
       },
-      {
-        "id": "seo",
+      "seo": {
         "name": "SEO setup",
-        "desc": "Google-ready from day one",
-        "phrase": "SEO setup"
+        "desc": "Google-ready from day one"
       },
-      {
-        "id": "care",
+      "care": {
         "name": "Monthly care",
-        "desc": "Hosting, updates, fixes",
-        "phrase": "monthly care"
+        "desc": "Hosting, updates, fixes"
       }
-    ],
-    "currencyIn": "In:",
-    "currencyLabel": "Currency",
-    "detected": "auto-detected: {country}",
-    "notSure": "Not sure yet",
-    "times": [
-      "ASAP",
-      "1–2 months",
-      "No rush"
-    ],
-    "currencies": {
-      "MAD": "Dirham",
-      "XOF": "CFA franc",
-      "EUR": "Euro",
-      "GBP": "Pound",
-      "CHF": "Swiss franc",
-      "CAD": "Canadian dollar",
-      "USD": "US dollar",
-      "AED": "UAE dirham",
-      "SAR": "Saudi riyal",
-      "QAR": "Qatari riyal",
-      "KWD": "Kuwaiti dinar"
     },
-    "countries": {
-      "MA": "Morocco",
-      "SN": "Senegal",
-      "CI": "Côte d’Ivoire",
-      "PT": "Portugal",
-      "ES": "Spain",
-      "IT": "Italy",
-      "FR": "France",
-      "BE": "Belgium",
-      "DE": "Germany",
-      "NL": "Netherlands",
-      "IE": "Ireland",
-      "GB": "United Kingdom",
-      "CA": "Canada",
-      "AE": "United Arab Emirates",
-      "SA": "Saudi Arabia",
-      "QA": "Qatar",
-      "KW": "Kuwait",
-      "US": "United States",
-      "CH": "Switzerland",
-      "LU": "Luxembourg",
-      "OTHER": "another country"
+    "step3": "Your budget",
+    "currencyIn": "In",
+    "detected": "auto-detected: {country}",
+    "under": "Under {a}",
+    "range": "{a} – {b}",
+    "over": "{c}+",
+    "notSure": "Not sure yet",
+    "step4": "When do you need it?",
+    "timing": {
+      "asap": "ASAP",
+      "soon": "1–2 months",
+      "noRush": "No rush"
     },
     "receipt": {
-      "header": "{name} · Project brief",
+      "title": "Project brief",
       "budget": "Budget",
       "timeline": "Timeline",
       "send": "Send on WhatsApp",
       "footer": "I reply with a quote that fits your budget",
-      "startLine": "Projects usually start around [X]"
-    }
+      "startsAround": "Projects usually start around {x}"
+    },
+    "whatsapp": "Hi! I'd like a {need}{addons}. Budget: {budget}. Timeline: {timeline}. [{country}]",
+    "currencyLabel": "Currency"
   },
   "about": {
     "label": "04 — About & process",
     "title": "Access card.",
     "cardTitle": "Dev access",
     "role": "Web developer · Morocco · EN/FR/AR",
-    "photo": "[PHOTO]",
-    "photoAlt": "[PHOTO ALT]",
-    "slide": "Slide to flip →",
-    "flipLabel": "Flip the card",
-    "front": "Front of card",
-    "back": "Back of card",
-    "details": [
+    "fields": {
+      "experience": "Experience",
+      "experienceValue": "[YEARS] years",
+      "client": "Real client",
+      "stack": "Stack",
+      "studies": "Studies",
+      "studiesValue": "[SCHOOL / FIELD]"
+    },
+    "process": [
       {
-        "k": "Experience",
-        "v": "[YEARS]"
+        "title": "Call",
+        "desc": "We talk on WhatsApp"
       },
       {
-        "k": "Real client",
-        "v": "Hanabaly"
+        "title": "Design",
+        "desc": "Clickable mockups first"
       },
       {
-        "k": "Stack",
-        "v": "Next.js / React / GSAP"
+        "title": "Build",
+        "desc": "Weekly preview links"
       },
       {
-        "k": "Studies",
-        "v": "[SCHOOL]"
+        "title": "Launch",
+        "desc": "Hosting, domain, handover"
       }
     ],
-    "qrLabel": "Scan to chat on WhatsApp",
-    "steps": [
-      "Call",
-      "Design",
-      "Build",
-      "Launch"
-    ],
-    "request": "Request access",
-    "requestMessage": "Hi! I'd like to request access 👋 (from your portfolio)",
-    "flipBack": "↻ flip back"
+    "slide": "Slide to flip →",
+    "flip": "Flip the card",
+    "flipBack": "↻ Flip back",
+    "requestAccess": "Request access",
+    "front": "Front of card",
+    "back": "Back of card",
+    "whatsapp": "Hi! I'd like to request access (from your portfolio)",
+    "photo": "[PHOTO]",
+    "photoAlt": "[PHOTO DESCRIPTION]",
+    "qrLabel": "QR code: chat on WhatsApp"
   },
   "contact": {
     "label": "05 — Contact",
-    "title": [
-      "Let’s",
-      "talk"
-    ],
-    "note": "the paper is back ✦ — say hi",
+    "title": "Let's talk",
+    "note": "the paper is back, say hi",
     "whatsapp": "Message me on WhatsApp",
-    "waMessage": "Hi! I saw your portfolio and…",
-    "email": "[EMAIL]",
-    "replies": "Usually replies within [X] hours · it’s {time} in Morocco",
-    "footer": {
-      "copy": "© 2026 {name}",
-      "made": "Made in Morocco",
-      "langs": [
-        "EN",
-        "FR",
-        "AR"
-      ],
-      "languages": "Languages",
-      "rewind": "Rewind to top ↑"
-    }
+    "whatsappText": "Hi! I saw your portfolio and…",
+    "reply": "Usually replies within {hours} hours · it's {time} in Morocco",
+    "madeIn": "Made in Morocco",
+    "rewind": "Rewind to top ↑",
+    "email": "[EMAIL]"
   }
 }

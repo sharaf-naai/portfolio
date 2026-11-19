@@ -1,23 +1,31 @@
 "use client";
 
 import { useRef } from "react";
-import messages from "@/messages/en.json";
+import { useLocale, useMessages } from "next-intl";
 import Grain from "../Grain";
 import { useFlip } from "./useFlip";
 import { useHologram } from "./useHologram";
 import { useCardScroll } from "./useCardScroll";
 
-const t = messages.about;
-const NAME = messages.hero.name;
 
 const BLACK = "radial-gradient(80% 90% at 20% 10%, #23262B, #0B0C0E)";
-const GLOWS = "radial-gradient(40% 45% at 25% 70%, rgba(47,183,168,.28), transparent 70%), radial-gradient(35% 40% at 80% 30%, rgba(242,168,29,.2), transparent 70%), linear-gradient(180deg, var(--color-night), var(--color-night-deep))";
+const GLOWS = "radial-gradient(40% 45% at 25% 70%, rgba(36,80,240,.3), transparent 70%), radial-gradient(35% 40% at 80% 30%, rgba(242,168,29,.2), transparent 70%), linear-gradient(180deg, var(--color-night), var(--color-night-deep))";
 // Both faces share one grid cell, so the card grows if a face's content is taller than the ratio (mobile back).
 const FACE = "relative overflow-hidden rounded-[24px] [grid-area:1/1] [backface-visibility:hidden]";
-const PILL = "inline-flex min-h-11 items-center gap-2 rounded-full px-5 font-display text-[13px] font-extrabold uppercase tracking-[0.04em] [font-stretch:112%]";
+const PILL = "btn inline-flex min-h-11 items-center gap-2 rounded-full px-5";
 
 /** 04 About: dark access card. Front = who, back = details, QR and process. Swipe the knob to flip. */
 export default function AccessCard({ qr, requestUrl }: { qr: string; requestUrl: string }) {
+  const { about: t, hero } = useMessages();
+  const NAME = hero.name;
+  // Raised letters light up one by one; Arabic letters join, so the name lights up as one piece there.
+  const letters = useLocale() === "ar" ? [NAME] : [...NAME];
+  const details = [
+    [t.fields.experience, t.fields.experienceValue],
+    [t.fields.client, "Hanabaly"],
+    [t.fields.stack, "Next.js / React / GSAP"],
+    [t.fields.studies, t.fields.studiesValue],
+  ];
   const root = useRef<HTMLElement>(null);
   const card = useRef<HTMLDivElement>(null);
   const flip = useFlip(card);
@@ -27,7 +35,7 @@ export default function AccessCard({ qr, requestUrl }: { qr: string; requestUrl:
   return (
     <section ref={root} id="about" className="relative flex min-h-svh items-center overflow-hidden px-4 py-20 md:px-10" style={{ background: GLOWS }}>
       <div data-about-content className="mx-auto w-full max-w-[1200px]">
-        <p className="label-mono text-[11px] tracking-[0.14em] text-bone/60">{t.label}</p>
+        <p className="label-mono text-[12px] text-pen-light">{t.label}</p>
         <h2 className="headline mt-3 text-[clamp(40px,7vw,96px)] text-bone">{t.title}</h2>
 
         <div data-card-stage className="relative mt-10 w-full max-w-[760px] [perspective:1400px]">
@@ -61,7 +69,7 @@ export default function AccessCard({ qr, requestUrl }: { qr: string; requestUrl:
                       <div className="mt-auto">
                         <p className="headline raised text-[clamp(24px,6vw,54px)]">
                           <span className="sr-only">{NAME}</span>
-                          {[...NAME].map((c, i) => (
+                          {letters.map((c, i) => (
                             <span key={i} data-letter aria-hidden="true">
                               {c}
                             </span>
@@ -77,13 +85,13 @@ export default function AccessCard({ qr, requestUrl }: { qr: string; requestUrl:
                   </div>
 
                   <div ref={flip.trackRef} className="relative mt-4 rounded-full border border-[#33363C] bg-[#1C1E22] p-1.5">
-                    <span data-slide-label aria-hidden="true" className="label-mono pointer-events-none absolute inset-0 flex items-center justify-center pl-10 text-[11px] text-bone/70">
+                    <span data-slide-label aria-hidden="true" className="label-mono pointer-events-none absolute inset-0 flex items-center justify-center ps-10 text-[11px] text-bone/70">
                       {t.slide}
                     </span>
                     <button
                       ref={flip.knobRef}
                       type="button"
-                      aria-label={t.flipLabel}
+                      aria-label={t.flip}
                       {...flip.knob}
                       className="relative flex size-11 cursor-grab touch-none items-center justify-center rounded-full bg-bone text-xl text-ink active:cursor-grabbing"
                     >
@@ -99,8 +107,8 @@ export default function AccessCard({ qr, requestUrl }: { qr: string; requestUrl:
                 <div aria-hidden="true" className="relative mt-[clamp(14px,4%,28px)] h-[clamp(28px,9%,44px)] bg-black" />
                 <div className="relative px-[clamp(16px,4.5%,36px)] pb-[clamp(16px,4.5%,36px)] pt-4">
                   <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-                    <dl className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-1.5 font-mono text-xs uppercase tracking-[0.08em]">
-                      {t.details.map(({ k, v }) => (
+                    <dl className="label-mono grid grid-cols-[auto_1fr] gap-x-6 gap-y-1.5 text-xs">
+                      {details.map(([k, v]) => (
                         <div key={k} className="contents">
                           <dt className="text-[#8A877F]">{k}</dt>
                           <dd className="text-bone">{v}</dd>
@@ -116,20 +124,21 @@ export default function AccessCard({ qr, requestUrl }: { qr: string; requestUrl:
                   </div>
 
                   <ol className="mt-4 grid grid-cols-4 gap-2 border-t border-white/10 pt-3">
-                    {t.steps.map((step, i) => (
-                      <li key={step}>
-                        <span className="label-mono block text-[10px] text-red-light">{`0${i + 1}`}</span>
-                        <span className="headline text-[clamp(11px,2vw,16px)] text-bone">{step}</span>
+                    {t.process.map((step, i) => (
+                      <li key={step.title}>
+                        <span className="label-mono block text-[10px] text-pen-light">{`0${i + 1}`}</span>
+                        <span className="headline block text-[clamp(14px,2.4vw,20px)] text-bone">{step.title}</span>
+                        <span className="block text-[12px] leading-snug text-bone/60 max-md:hidden">{step.desc}</span>
                       </li>
                     ))}
                   </ol>
 
                   <div className="mt-4 flex flex-wrap gap-3">
-                    <a href={requestUrl} target="_blank" rel="noopener noreferrer" className={`${PILL} bg-bone text-ink hover:bg-white`}>
+                    <a href={requestUrl} target="_blank" rel="noopener noreferrer" className={`${PILL} btn-action`}>
                       <svg aria-hidden="true" width="18" height="18" viewBox="0 0 28 28" fill="none" stroke="currentColor" strokeWidth="2.4">
                         <path d="M5 22 L7 17 A9 9 0 1 1 11 21 Z" />
                       </svg>
-                      {t.request}
+                      {t.requestAccess}
                     </a>
                     <button ref={flip.backRef} type="button" onClick={flip.flipBack} className={`${PILL} border border-bone/40 text-bone hover:bg-white/10`}>
                       {t.flipBack}

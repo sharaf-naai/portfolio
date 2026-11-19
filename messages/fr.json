@@ -1,0 +1,206 @@
+{
+  "meta": {
+    "title": "Sharaf — Développeur web, Maroc",
+    "description": "Sites web, applications web et CRM, conçus et développés par Sharaf. Basé au Maroc, je travaille avec des clients partout."
+  },
+  "controls": {
+    "language": "Langue",
+    "skipToContact": "Aller au contact",
+    "ringProgress": "Progression {p} %. Aller à la partie suivante",
+    "ringTop": "Revenir en haut",
+    "ringHint": "suite ↓"
+  },
+  "loader": {
+    "messages": [
+      "je taille les crayons…",
+      "je dessine votre hôte…",
+      "presque fini"
+    ],
+    "loading": "Chargement"
+  },
+  "hero": {
+    "role": "Développeur / Créateur",
+    "year": "2026",
+    "name": "Sharaf",
+    "note": "allez-y, scrollez et déchirez",
+    "bigWord": "Sites web"
+  },
+  "work": {
+    "label": "02 — Projets choisis",
+    "hint": "Survol = aperçu · Clic = voir le site",
+    "visit": "Voir le site ↗",
+    "cursor": "Voir ↗",
+    "playing": "▶ En lecture",
+    "comingSoon": "Bientôt",
+    "fields": {
+      "type": "Type",
+      "for": "Pour",
+      "stack": "Stack",
+      "year": "Année"
+    },
+    "projects": {
+      "restaurant": {
+        "name": "Site de restaurant",
+        "kind": "Concept",
+        "summary": "[UNE PHRASE SUR LE PROJET]",
+        "type": "Site web · concept",
+        "for": "Restaurants",
+        "stack": "[STACK]",
+        "year": "[YEAR]"
+      },
+      "hanabaly": {
+        "name": "Hanabaly",
+        "kind": "Client réel",
+        "summary": "Une plateforme de prise de rendez-vous pour médecins et psychologues.",
+        "type": "Application web · vrai client",
+        "for": "Médecins, psychologues",
+        "stack": "[STACK]",
+        "year": "[YEAR]"
+      },
+      "booking": {
+        "name": "Moteur de réservation",
+        "kind": "Concept",
+        "summary": "Les clients réservent sur le site ou par WhatsApp. Les rappels partent tout seuls.",
+        "type": "Application web · concept",
+        "for": "Cliniques, salons, salles de sport",
+        "stack": "[STACK]",
+        "year": "[YEAR]"
+      },
+      "carRental": {
+        "name": "CRM location auto",
+        "kind": "Concept",
+        "summary": "[UNE PHRASE SUR LE PROJET]",
+        "type": "CRM · concept",
+        "for": "Agences de location de voitures",
+        "stack": "[STACK]",
+        "year": "[YEAR]"
+      },
+      "yours": {
+        "name": "Votre projet",
+        "kind": "Le prochain ?",
+        "summary": "Votre site ici →",
+        "type": "[TYPE]",
+        "for": "Vous",
+        "stack": "[STACK]",
+        "year": "[YEAR]"
+      }
+    },
+    "videoPlaceholder": "Vidéo · [VIDEO]",
+    "visitLabel": "Visiter {name} (s’ouvre dans un nouvel onglet)",
+    "ctaLabel": "M’écrire sur WhatsApp à propos de votre projet"
+  },
+  "services": {
+    "label": "03 — Services",
+    "title": "Composez votre brief.",
+    "step1": "De quoi avez-vous besoin ?",
+    "needs": {
+      "website": "Site web",
+      "webApp": "Application web",
+      "crm": "CRM",
+      "automation": "Automatisation"
+    },
+    "step2": "Options",
+    "addons": {
+      "lang": {
+        "name": "Langue supplémentaire",
+        "desc": "Version française / arabe"
+      },
+      "booking": {
+        "name": "Système de réservation",
+        "desc": "Vos clients réservent en ligne"
+      },
+      "whatsapp": {
+        "name": "Automatisation WhatsApp",
+        "desc": "Rappels et réponses"
+      },
+      "cms": {
+        "name": "Modifiable par vous",
+        "desc": "Un admin simple pour vos textes"
+      },
+      "seo": {
+        "name": "Référencement (SEO)",
+        "desc": "Prêt pour Google dès le premier jour"
+      },
+      "care": {
+        "name": "Maintenance mensuelle",
+        "desc": "Hébergement, mises à jour, corrections"
+      }
+    },
+    "step3": "Votre budget",
+    "currencyIn": "En",
+    "detected": "détecté : {country}",
+    "under": "Moins de {a}",
+    "range": "{a} – {b}",
+    "over": "{c} et plus",
+    "notSure": "Pas encore sûr",
+    "step4": "Pour quand ?",
+    "timing": {
+      "asap": "Au plus vite",
+      "soon": "D'ici 1 à 2 mois",
+      "noRush": "Pas pressé"
+    },
+    "receipt": {
+      "title": "Brief du projet",
+      "budget": "Budget",
+      "timeline": "Délai",
+      "send": "Envoyer sur WhatsApp",
+      "footer": "Je réponds avec un devis adapté à votre budget",
+      "startsAround": "Les projets commencent généralement autour de {x}"
+    },
+    "whatsapp": "Bonjour ! J'aimerais un(e) {need}{addons}. Budget : {budget}. Délai : {timeline}. [{country}]",
+    "currencyLabel": "Devise"
+  },
+  "about": {
+    "label": "04 — À propos & méthode",
+    "title": "Carte d'accès.",
+    "cardTitle": "Accès dev",
+    "role": "Développeur web · Maroc · EN/FR/AR",
+    "fields": {
+      "experience": "Expérience",
+      "experienceValue": "[ANNÉES] ans",
+      "client": "Client réel",
+      "stack": "Stack",
+      "studies": "Études",
+      "studiesValue": "[ÉCOLE / FILIÈRE]"
+    },
+    "process": [
+      {
+        "title": "Appel",
+        "desc": "On en parle sur WhatsApp"
+      },
+      {
+        "title": "Design",
+        "desc": "Des maquettes cliquables d'abord"
+      },
+      {
+        "title": "Développement",
+        "desc": "Un lien d'aperçu chaque semaine"
+      },
+      {
+        "title": "Lancement",
+        "desc": "Hébergement, domaine, remise"
+      }
+    ],
+    "slide": "Glissez pour retourner →",
+    "flip": "Retourner la carte",
+    "flipBack": "↻ Retourner",
+    "requestAccess": "Demander l'accès",
+    "front": "Recto de la carte",
+    "back": "Verso de la carte",
+    "whatsapp": "Bonjour ! J'aimerais demander l'accès (depuis votre portfolio)",
+    "photo": "[PHOTO]",
+    "photoAlt": "[DESCRIPTION DE LA PHOTO]",
+    "qrLabel": "QR code : discuter sur WhatsApp"
+  },
+  "contact": {
+    "label": "05 — Contact",
+    "title": "Parlons-en",
+    "note": "le papier est de retour, dites bonjour",
+    "whatsapp": "M'écrire sur WhatsApp",
+    "whatsappText": "Bonjour ! J'ai vu votre portfolio et…",
+    "reply": "Je réponds en général sous {hours} h · il est {time} au Maroc",
+    "madeIn": "Fait au Maroc",
+    "rewind": "Revenir en haut ↑",
+    "email": "[EMAIL]"
+  }
+}

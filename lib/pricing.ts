@@ -67,11 +67,16 @@ export function edges(country: CountryCode, need: Need, currency: Currency, rate
   });
 }
 
-const num = (v: number) => v.toLocaleString("en-US");
+export type BandLabels = { under: string; range: string; over: string }; // "Under {a}", "{a} – {b}", "{c}+"
 
-/** Band labels: `Under A` · `A – B` · `B – C` · `C+`. The last pill ("Not sure yet") comes from the copy. */
-export function bands([a, b, c]: number[], currency: string): string[] {
-  return [`Under ${num(a)}`, `${num(a)} – ${num(b)}`, `${num(b)} – ${num(c)}`, `${num(c)}+`].map((s) => `${s} ${currency}`);
+/**
+ * Band labels: `Under A` · `A – B` · `B – C` · `C+`, worded and grouped for `locale`, always in Western digits.
+ * The last pill ("Not sure yet") comes from the copy.
+ */
+export function bands([a, b, c]: number[], currency: string, l: BandLabels, locale = "en"): string[] {
+  const f = new Intl.NumberFormat(locale, { numberingSystem: "latn" });
+  const fill = (tpl: string, v: Record<string, number>) => tpl.replace(/\{(\w)\}/g, (_, k: string) => f.format(v[k]));
+  return [fill(l.under, { a }), fill(l.range, { a, b }), fill(l.range, { a: b, b: c }), fill(l.over, { c })].map((s) => `${s} ${currency}`);
 }
 
 /** Timezone → country, the fallback when the `country` cookie is missing. Unknown zones → OTHER. */
@@ -97,10 +102,22 @@ export function detectCountry(cookie: string, tz: string | undefined): CountryCo
   return isCountry(fromCookie) ? fromCookie : countryFromTimeZone(tz);
 }
 
-/** "Hi! I'd like a website + booking system. Budget: 1,800–3,500 GBP. Timeline: 1–2 months. [GB]" */
-export function briefMessage(o: { need: string; addons: string[]; budget: string; time: string; country: CountryCode }) {
-  const what = [o.need, ...o.addons].join(" + ");
-  return `Hi! I'd like ${what}. Budget: ${o.budget.replace(" – ", "–")}. Timeline: ${o.time}. [${o.country}]`;
+// Mid-sentence: "Website" → "website", but acronyms (CRM, SEO setup) stay as they are. No effect on Arabic.
+const lowerFirst = (s: string) => (/^[A-Z][a-zà-ÿ]/.test(s) ? s[0].toLowerCase() + s.slice(1) : s);
+
+/**
+ * The WhatsApp brief from the locale's template (services.whatsapp), e.g.
+ * "Hi! I'd like a website + booking system. Budget: 1,800–3,500 GBP. Timeline: 1–2 months. [GB]"
+ */
+export function briefMessage(template: string, o: { need: string; addons: string[]; budget: string; time: string; country: CountryCode }) {
+  const parts: Record<string, string> = {
+    need: lowerFirst(o.need),
+    addons: o.addons.map((a) => ` + ${lowerFirst(a)}`).join(""),
+    budget: o.budget.replace(" – ", "–"),
+    timeline: o.time,
+    country: o.country,
+  };
+  return template.replace(/\{(\w+)\}/g, (m, k: string) => parts[k] ?? m);
 }
 
 export const whatsappUrl = (text: string) => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;

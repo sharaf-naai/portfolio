@@ -7,23 +7,11 @@ import {
   backOut, basePose, fiberPoints, flyPose, lerpPose, tipAt,
   FLY_DURATION, RIP_BOTTOM_PX, RIP_TOP_X, type HalfState, type Side,
 } from "@/lib/rip";
-import { cardPose, WHEEL } from "@/lib/wheel";
-import { crossingGuard } from "@/lib/crossings";
-import { play, type SoundName } from "@/lib/sound";
 
 const RELEASE = 0.6; // tear complete → halves are thrown (physics, not scrub)
 const REASSEMBLE = 0.55; // scrolling back above this snaps them home
 const ASSEMBLE_S = 0.6;
 const SIDES: Side[] = ["left", "right"];
-
-const SOUNDS = crossingGuard<SoundName>([
-  { at: 0.05, dir: "down", name: "tapePeel" },
-  { at: 0.25, dir: "down", name: "rip1" },
-  { at: 0.45, dir: "down", name: "rip2" },
-  { at: 0.65, dir: "down", name: "rip3" },
-  { at: 0.25, dir: "up", name: "rustle" },
-  { at: 0.75, dir: "down", name: "whoosh" },
-]);
 
 /** Scroll-driven paper rip for the hero. Expects the data-* hooks rendered by Hero/RipPaper. */
 export function useRip(rootRef: RefObject<HTMLElement | null>) {
@@ -37,7 +25,6 @@ export function useRip(rootRef: RefObject<HTMLElement | null>) {
     mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
       const halves = q("[data-half]") as HTMLElement[];
       const fibers = q("[data-fiber]") as Element[];
-      const polaroids = q("[data-polaroid]") as HTMLElement[];
       const rip = q("[data-rip]")[0] as HTMLElement;
       const restShadow = rip.style.filter;
       let W = 0;
@@ -156,48 +143,27 @@ export function useRip(rootRef: RefObject<HTMLElement | null>) {
         onUpdate: () => {
           p = proxy.p;
           render();
-          SOUNDS(p, performance.now(), (name) =>
-            play(name, name.startsWith("rip") ? gsap.utils.clamp(0.3, 1, Math.abs(st.getVelocity()) / 2000) : 1),
-          );
         },
       }, 0);
 
-      // 0–10% build-up: polaroids lift, the note wiggles
-      polaroids.forEach((el, j) =>
-        tl.to(el, { y: [-14, -18, -16][j], rotation: `+=${[-2, 2, -1.5][j]}`, boxShadow: "0 26px 40px rgba(0,0,0,0.38)", duration: 0.1 }, 0),
-      );
+      // 0–10% build-up: the note wiggles
       tl.to(q("[data-note]"), { keyframes: { rotation: [0, 3, -2, 2, 0] }, duration: 0.1 }, 0);
+      // The language switcher lives on the paper: it leaves as the tear starts.
+      tl.to(q("[data-hero-controls]"), { autoAlpha: 0, duration: 0.08 }, 0.1);
 
       // 35–65% split: WEBSITES settles, glows brighten
       tl.fromTo(q("[data-websites]"), { scale: 1.12 }, { scale: 1, duration: 0.3 }, 0.35);
       tl.fromTo(q("[data-glow-boost]"), { opacity: 0 }, { opacity: 1, duration: 0.3 }, 0.35);
 
-      // 65–95% handoff: polaroids 02–04 move onto their wheel cards' poses (wheel at rest on card 01)
-      polaroids.forEach((el, j) => {
-        const pose = () => cardPose(j + 1, 0, window.innerWidth, window.innerHeight);
-        tl.to(el, {
-          x: () => pose().x - (el.offsetLeft + el.offsetWidth / 2),
-          y: () => pose().y - (el.offsetTop + el.offsetHeight / 2),
-          rotation: () => pose().angle,
-          scaleX: () => (pose().scale * WHEEL.cardW) / el.offsetWidth,
-          scaleY: () => (pose().scale * WHEEL.cardH) / el.offsetHeight,
-          ease: "power2.inOut",
-          duration: 0.3,
-        }, 0.65);
-      });
-
-      // 80–90% WEBSITES leaves; 95–100% the hero turns transparent, revealing the Work wheel
-      // underneath with its cards where the polaroids landed
+      // 80–90% WEBSITES leaves; 95–100% the hero turns transparent, revealing the Work wheel underneath
       tl.to(q("[data-websites]"), { autoAlpha: 0, duration: 0.1 }, 0.8);
-      tl.to([...polaroids, ...q("[data-hero-bg]:not([data-websites])")], { autoAlpha: 0, duration: 0.05 }, 0.95);
+      tl.to(q("[data-hero-bg]:not([data-websites])"), { autoAlpha: 0, duration: 0.05 }, 0.95);
       // Once torn, nothing in the hero is clickable, and it (plus its pin-spacer) overlaps the pinned
       // wheel for a screen: let clicks through to the Work panel.
       const spacer = root.parentElement;
       if (spacer?.classList.contains("pin-spacer")) spacer.style.pointerEvents = "none";
       gsap.set(root, { pointerEvents: "auto" });
       tl.set(root, { pointerEvents: "none" }, RELEASE);
-
-
 
       return () => {
         gsap.ticker.remove(tick);
@@ -214,8 +180,7 @@ export function useRip(rootRef: RefObject<HTMLElement | null>) {
     mm.add("(max-width: 767px) and (prefers-reduced-motion: no-preference)", () => {
       gsap
         .timeline({ defaults: { ease: "none" }, scrollTrigger: { trigger: root, start: "top top", end: "bottom top", scrub: true } })
-        .to(q("[data-half]"), { yPercent: -70, rotation: -4, duration: 1 }, 0)
-        .to(q("[data-polaroid]"), { y: -60, duration: 1 }, 0);
+        .to(q("[data-half]"), { yPercent: -70, rotation: -4, duration: 1 }, 0);
     });
 
     return () => mm.revert();

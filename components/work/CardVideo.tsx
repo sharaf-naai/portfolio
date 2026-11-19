@@ -47,7 +47,7 @@ export default function CardVideo({ src, poster, shot, label, placeholderText, p
   if (!src) {
     return (
       <div role="img" aria-label={label} className="relative h-full min-h-40 overflow-hidden rounded-lg" style={{ background: shot }}>
-        <span className="label-mono absolute bottom-2.5 left-2.5 rounded-[3px] bg-black/55 px-1.5 py-1 text-[10px] tracking-[0.12em] text-[#F2EFE9]">
+        <span className="label-mono absolute bottom-2.5 start-2.5 rounded-[3px] bg-black/55 px-1.5 py-1 text-[10px] tracking-[0.12em] text-[#F2EFE9]">
           {placeholderText}
         </span>
       </div>

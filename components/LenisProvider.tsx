@@ -27,17 +27,6 @@ export function useOnScroll(update: () => void) {
   }, [lenis]);
 }
 
-/**
- * Is the point (x, y) over a visible paper sheet ([data-theme="paper"], set by <Paper>)?
- * By geometry, not hit-testing: the rip's right half is `inert`, and browsers skip inert elements in elementsFromPoint.
- */
-export function overPaper(x: number, y: number) {
-  return [...document.querySelectorAll('[data-theme="paper"]')].some((el) => {
-    const r = el.getBoundingClientRect();
-    return x >= r.left && x <= r.right && y >= r.top && y <= r.bottom && el.checkVisibility({ opacityProperty: true, visibilityProperty: true });
-  });
-}
-
 export default function LenisProvider({ children }: { children: React.ReactNode }) {
   const [lenis, setLenis] = useState<Lenis | null>(null);
 
