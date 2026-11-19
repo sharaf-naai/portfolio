@@ -92,10 +92,10 @@ html::-webkit-scrollbar {
   display: none;
 }
 
-/* Work wheel (desktop, motion allowed). Must match WHEEL_QUERY in components/work/useWheel.ts.
+/* Work wheel (desktop, motion allowed). Must match DESKTOP_MOTION in lib/media.ts.
    JS writes --rot (wheel position) and --s (scale); --i is the card index; --cx/--r/--step come from lib/wheel.ts.
    Arabic (--dir: -1) mirrors it: arc centre off-screen right, cards turning the other way. Must match cardPose(). */
-@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+@media (min-width: 1024px) and (min-height: 500px) and (orientation: landscape) and (prefers-reduced-motion: no-preference) {
   #work {
     margin-top: -100svh; /* sits under the pinned hero, revealed as the paper tears away */
     height: 100svh;

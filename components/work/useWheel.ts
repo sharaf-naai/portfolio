@@ -6,8 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { wheelScale } from "@/lib/wheel";
 import { useLenis } from "../LenisProvider";
 
-/** Must match the wheel block in globals.css. */
-export const WHEEL_QUERY = "(min-width: 768px) and (prefers-reduced-motion: no-preference)";
+import { DESKTOP_MOTION } from "@/lib/media";
 
 /**
  * Pins the Work section and turns the wheel one card per screen of scroll, snapping to cards.
@@ -28,8 +27,8 @@ export function useWheel(rootRef: RefObject<HTMLElement | null>, cardsRef: RefOb
     gsap.registerPlugin(ScrollTrigger);
     const mm = gsap.matchMedia();
 
-    mm.add(WHEEL_QUERY, () => {
-      const setScale = () => cards.style.setProperty("--s", String(wheelScale(window.innerWidth)));
+    mm.add(DESKTOP_MOTION, () => {
+      const setScale = () => cards.style.setProperty("--s", String(wheelScale(window.innerWidth, window.innerHeight)));
       setScale();
       window.addEventListener("resize", setScale);
 

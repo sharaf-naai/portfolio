@@ -7,7 +7,8 @@ import { PROJECT_URLS } from "@/lib/projects";
 import { whatsappUrl } from "@/lib/pricing";
 import Grain from "../Grain";
 import CardVideo from "./CardVideo";
-import { useWheel, WHEEL_QUERY } from "./useWheel";
+import { useWheel } from "./useWheel";
+import { DESKTOP_MOTION } from "@/lib/media";
 
 // Same order as the cards; the last one, "Your project", opens WhatsApp.
 const IDS = ["restaurant", "hanabaly", "booking", "carRental", "yours"] as const;
@@ -49,7 +50,7 @@ export default function Work() {
   const cardsRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
   const [hovered, setHovered] = useState<number | null>(null);
-  const wheel = useMedia(WHEEL_QUERY);
+  const wheel = useMedia(DESKTOP_MOTION);
   const goTo = useWheel(root, cardsRef, projects.length, setActive);
   const p = projects[active];
 

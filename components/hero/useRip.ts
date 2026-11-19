@@ -7,6 +7,7 @@ import {
   backOut, basePose, fiberPoints, flyPose, lerpPose, tipAt,
   FLY_DURATION, RIP_BOTTOM_PX, RIP_TOP_X, type HalfState, type Side,
 } from "@/lib/rip";
+import { DESKTOP_MOTION, PHONE_MOTION } from "@/lib/media";
 
 const RELEASE = 0.6; // tear complete → halves are thrown (physics, not scrub)
 const REASSEMBLE = 0.55; // scrolling back above this snaps them home
@@ -22,7 +23,7 @@ export function useRip(rootRef: RefObject<HTMLElement | null>) {
     const q = gsap.utils.selector(root);
     const mm = gsap.matchMedia();
 
-    mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
+    mm.add(DESKTOP_MOTION, () => {
       const halves = q("[data-half]") as HTMLElement[];
       const fibers = q("[data-fiber]") as Element[];
       const rip = q("[data-rip]")[0] as HTMLElement;
@@ -176,8 +177,8 @@ export function useRip(rootRef: RefObject<HTMLElement | null>) {
       };
     });
 
-    // Phones: one torn sheet slides up and away, no split, no pin.
-    mm.add("(max-width: 767px) and (prefers-reduced-motion: no-preference)", () => {
+    // Phones and upright tablets: one torn sheet slides up and away, no split, no pin.
+    mm.add(PHONE_MOTION, () => {
       gsap
         .timeline({ defaults: { ease: "none" }, scrollTrigger: { trigger: root, start: "top top", end: "bottom top", scrub: true } })
         .to(q("[data-half]"), { yPercent: -70, rotation: -4, duration: 1 }, 0);

@@ -1,15 +1,16 @@
 // Work wheel geometry (design canvas at 1440 wide): arc centre off-screen left, cards on its rim.
-export const WHEEL = { cx: -260, r: 1110, step: 17, cardW: 520, cardH: 330, designW: 1440 };
+export const WHEEL = { cx: -260, r: 1110, step: 17, cardW: 520, cardH: 330, designW: 1440, designH: 900 };
 
-/** Whole wheel scales with the viewport width. */
-export const wheelScale = (vw: number) => Math.min(1.15, Math.max(0.5, vw / WHEEL.designW));
+/** Whole wheel scales with the viewport, by whichever side is tighter, so it fits short laptop screens too. */
+export const wheelScale = (vw: number, vh: number) =>
+  Math.min(1.15, Math.max(0.5, Math.min(vw / WHEEL.designW, vh / WHEEL.designH)));
 
 /**
  * Centre (px from the section's top-left) and angle (deg) of card `i` when the wheel sits at `rot`.
  * `dir` -1 (Arabic) mirrors the wheel: same maths as the .wheel-card rule in globals.css.
  */
 export function cardPose(i: number, rot: number, vw: number, vh: number, dir: 1 | -1 = 1) {
-  const s = wheelScale(vw);
+  const s = wheelScale(vw, vh);
   const angle = (i - rot) * WHEEL.step;
   const rad = (angle * Math.PI) / 180;
   const x = (WHEEL.cx + Math.cos(rad) * WHEEL.r) * s;
