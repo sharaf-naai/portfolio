@@ -15,10 +15,20 @@ const IDS = ["restaurant", "hanabaly", "booking", "carRental", "yours"] as const
 const CTA = IDS.length - 1;
 const PILL = "btn inline-flex min-h-11 items-center rounded-full px-5";
 
+// Card colours, plus `page`: the colours the whole section takes on while that card is active (wheel mode).
 const THEMES = {
-  paper: { bg: "#F1F0EC", fg: "#141414", line: "rgba(20,20,20,0.18)" },
-  ink: { bg: "#121212", fg: "#EDEBE6", line: "rgba(237,235,230,0.18)" },
-  pen: { bg: "#2450F0", fg: "#F4F6FF", line: "rgba(244,246,255,0.35)" }, // red stays reserved for the PLAYING chip
+  paper: {
+    bg: "#F1F0EC", fg: "#141414", line: "rgba(20,20,20,0.18)",
+    page: { "--w-bg": "#EDEDE9", "--w-fg": "#141414", "--w-muted": "#4A4A4A", "--w-line": "rgba(20,20,20,0.16)", "--w-accent": "#2450F0" },
+  },
+  ink: {
+    bg: "#121212", fg: "#EDEBE6", line: "rgba(237,235,230,0.18)",
+    page: { "--w-bg": "#0B1110", "--w-fg": "#EDEBE6", "--w-muted": "#A9A7A1", "--w-line": "#2E2E2E", "--w-accent": "#7FA0FF" },
+  },
+  pen: {
+    bg: "#2450F0", fg: "#F4F6FF", line: "rgba(244,246,255,0.35)", // red stays reserved for the PLAYING chip
+    page: { "--w-bg": "#1A3BC4", "--w-fg": "#F4F6FF", "--w-muted": "#D2DAFF", "--w-line": "rgba(244,246,255,0.28)", "--w-accent": "#FFFFFF" },
+  },
 };
 
 // Media per project, same order as messages.work.projects. Add video/poster paths (e.g. /assets/videos/hanabaly.mp4) when recorded.
@@ -54,38 +64,34 @@ export default function Work() {
   const goTo = useWheel(root, cardsRef, projects.length, setActive);
   const p = projects[active];
   const details = "type" in p ? p : null; // "Your project" has no details rows
+  const page = THEMES[MEDIA[active].theme].page;
 
   return (
     <section
       ref={root}
       id="work"
       aria-label={t.label}
-      className="relative z-0 overflow-hidden px-4 py-24 text-bone"
-      style={{
-        background: [
-          "radial-gradient(45% 50% at 70% 50%, var(--color-blue-glow), transparent 70%)",
-          "radial-gradient(35% 40% at 15% 85%, rgba(242,168,29,0.18), transparent 70%)",
-          "linear-gradient(180deg, var(--color-night), var(--color-night-deep))",
-        ].join(", "),
-      }}
+      // Wheel: the section takes the active card's colours. Stack (phones): the same dark wash as under the hero.
+      className={`relative z-0 overflow-hidden px-4 py-24 text-[var(--w-fg)] transition-[background-color,color] duration-500 ${wheel ? "bg-[var(--w-bg)]" : "night-blend"}`}
+      style={(wheel ? page : THEMES.ink.page) as React.CSSProperties}
     >
-      <Grain opacity={0.18} blend="screen" />
+      <Grain opacity={0.18} blend={wheel && MEDIA[active].theme === "paper" ? "multiply" : "screen"} />
 
-      <h2 className="work-stack-only label-mono relative mb-10 text-center text-[12px] text-pen-light">{t.label}</h2>
+      <h2 className="work-stack-only label-mono relative mb-10 text-center text-[12px] text-[var(--w-accent)]">{t.label}</h2>
 
       {/* Active project panel (wheel mode only) */}
       <div className="work-panel absolute top-16 start-16 z-20 hidden w-[clamp(260px,29vw,420px)]">
-        <p className="label-mono mb-[18px] text-[12px] text-pen-light">{t.label}</p>
-        <p aria-hidden="true" className="headline text-[clamp(72px,min(10.4vw,15svh),150px)] leading-[0.85] text-transparent [-webkit-text-stroke:1.5px_var(--color-bone)]">
+        <p className="label-mono mb-[18px] text-[12px] text-[var(--w-accent)]">{t.label}</p>
+        <p aria-hidden="true" className="headline text-[clamp(72px,min(10.4vw,15svh),150px)] leading-[0.85] text-transparent [-webkit-text-stroke:1.5px_var(--w-fg)]">
           {`0${active + 1}`}
         </p>
         <h3 className="headline mt-2.5 text-[clamp(36px,min(4.4vw,7svh),64px)]">{p.name}</h3>
-        <p className="mt-3.5 max-w-[380px] text-[17px] leading-[1.6] text-[#CFCCC5]">{p.summary}</p>
+        <p className="mt-3.5 max-w-[380px] text-[17px] leading-[1.6] text-[var(--w-muted)]">{p.summary}</p>
         {details && <dl className="label-mono mt-[22px] grid grid-cols-[80px_minmax(0,1fr)] text-[11px] tracking-[0.12em]">
           {(["type", "for", "stack"] as const).map((k) => (
             <Fragment key={k}>
-              <dt className="border-t border-[#2E2E2E] py-2 text-[#A9A7A1]">{t.fields[k]}</dt>
-              <dd className="m-0 border-t border-[#2E2E2E] py-2">{details[k]}</dd>
+              <dt className="border-t border-[var(--w-line)] py-2 text-[var(--w-muted)]">{t.fields[k]}</dt>
+              <dd className="m-0 border-t border-[var(--w-line)] py-2">{details[k]}</dd>
             </Fragment>
           ))}
         </dl>}
@@ -95,12 +101,12 @@ export default function Work() {
               {active === CTA ? contact.whatsapp : t.visit}
             </a>
           ) : (
-            <span aria-disabled="true" className={`${PILL} bg-bone/15 text-bone/70`}>
+            <span aria-disabled="true" className={`${PILL} border-2 border-[var(--w-line)] text-[var(--w-muted)]`}>
               {t.comingSoon}
             </span>
           )}
         </div>
-        <p className="mt-4 font-hand text-[26px] leading-none text-pen-light">{t.hint}</p>
+        <p className="mt-4 font-hand text-[26px] leading-none text-[var(--w-accent)]">{t.hint}</p>
       </div>
 
       {/* Project list, on the far side of the wheel, vertically centred (wheel mode only) */}
@@ -112,9 +118,9 @@ export default function Work() {
                 type="button"
                 onClick={() => goTo(i)}
                 aria-current={i === active || undefined}
-                className={`label-mono flex min-h-6 items-center gap-3 text-[11px] ${i === active ? "text-bone" : "text-[#8E8C87]"}`}
+                className={`label-mono flex min-h-6 items-center gap-3 text-[11px] ${i === active ? "text-[var(--w-fg)]" : "text-[var(--w-muted)]"}`}
               >
-                <span aria-hidden="true" className={`h-0.5 transition-all ${i === active ? "w-7 bg-pen-light" : "w-3 bg-[#5A5854]"}`} />
+                <span aria-hidden="true" className={`h-0.5 transition-all ${i === active ? "w-7 bg-[var(--w-accent)]" : "w-3 bg-[var(--w-line)]"}`} />
                 {`0${i + 1} ${proj.name}`}
               </button>
             </li>

@@ -123,6 +123,26 @@ export function useRip(rootRef: RefObject<HTMLElement | null>) {
         }
       }
 
+      // Work sits under the pinned hero (margin-top: -100svh) but would still scroll up during the rip and
+      // show its top edge as the dark layer fades. Shift it back by the distance not yet scrolled, so it
+      // stays put and the fade reveals it in place. The wheel reads its start from layout (useWheel), and the
+      // shift is lifted while ScrollTrigger measures, so the wheel's pin never records it.
+      const work = document.getElementById("work");
+      let refreshing = false; // ScrollTrigger replays updates mid-refresh; never shift while it measures
+      const holdWork = (self: ScrollTrigger) => {
+        if (work && !refreshing) work.style.transform = `translate3d(0, ${-(1 - self.progress) * (self.end - self.start)}px, 0)`;
+      };
+      const unhold = () => {
+        refreshing = true;
+        work?.style.removeProperty("transform");
+      };
+      const rehold = () => {
+        refreshing = false;
+        holdWork(st);
+      };
+      ScrollTrigger.addEventListener("refreshInit", unhold);
+      ScrollTrigger.addEventListener("refresh", rehold);
+
       const proxy = { p: 0 };
       const tl = gsap.timeline({
         defaults: { ease: "none" },
@@ -134,6 +154,7 @@ export function useRip(rootRef: RefObject<HTMLElement | null>) {
           scrub: 0.25, // Lenis already smooths; a big scrub on top makes the tear lag behind the finger
           invalidateOnRefresh: true,
           onRefresh: measure,
+          onUpdate: holdWork,
         },
       });
       const st = tl.scrollTrigger!;
@@ -152,13 +173,12 @@ export function useRip(rootRef: RefObject<HTMLElement | null>) {
       // The language switcher lives on the paper: it leaves as the tear starts.
       tl.to(q("[data-hero-controls]"), { autoAlpha: 0, duration: 0.08 }, 0.1);
 
-      // 35–65% split: WEBSITES settles, glows brighten
+      // 35–65% split: WEBSITES settles
       tl.fromTo(q("[data-websites]"), { scale: 1.12 }, { scale: 1, duration: 0.3 }, 0.35);
-      tl.fromTo(q("[data-glow-boost]"), { opacity: 0 }, { opacity: 1, duration: 0.3 }, 0.35);
 
-      // 80–90% WEBSITES leaves; 95–100% the hero turns transparent, revealing the Work wheel underneath
-      tl.to(q("[data-websites]"), { autoAlpha: 0, duration: 0.1 }, 0.8);
-      tl.to(q("[data-hero-bg]:not([data-websites])"), { autoAlpha: 0, duration: 0.05 }, 0.95);
+      // 75–90% WEBSITES leaves; 75–100% the dark layer cross-fades into the Work wheel underneath (no pop)
+      tl.to(q("[data-websites]"), { autoAlpha: 0, duration: 0.15 }, 0.75);
+      tl.to(q("[data-hero-bg]:not([data-websites])"), { autoAlpha: 0, duration: 0.25 }, 0.75);
       // Once torn, nothing in the hero is clickable, and it (plus its pin-spacer) overlaps the pinned
       // wheel for a screen: let clicks through to the Work panel.
       const spacer = root.parentElement;
@@ -167,6 +187,9 @@ export function useRip(rootRef: RefObject<HTMLElement | null>) {
       tl.set(root, { pointerEvents: "none" }, RELEASE);
 
       return () => {
+        ScrollTrigger.removeEventListener("refreshInit", unhold);
+        ScrollTrigger.removeEventListener("refresh", rehold);
+        unhold();
         gsap.ticker.remove(tick);
         halves.forEach((h) => {
           h.style.transform = "";

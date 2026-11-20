@@ -5,7 +5,7 @@ const MASK = `url(${SRC}eyes-mask.png)`;
 /** Ink portrait frames, stacked and sized by font-size; `data-eye` picks the visible frame. Animated by useFace. */
 export default function Face({ className = "" }: { className?: string }) {
   return (
-    <span data-face data-eye="open" aria-hidden="true" className={`face relative inline-block ${className}`}>
+    <span data-face data-eye="open" aria-hidden="true" className={`face relative inline-block shrink-0 ${className}`}>
       {/* eslint-disable @next/next/no-img-element -- tiny frames that must all be loaded for instant swaps */}
       {/* Paper-coloured head silhouette: the face covers whatever sits behind it. */}
       <img src={`${SRC}fill.png`} alt="" draggable={false} className={layer} />

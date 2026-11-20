@@ -8,12 +8,6 @@ import { useFace } from "./hero/useFace";
 import Face from "./hero/Face";
 import LanguageSwitcher from "./LanguageSwitcher";
 
-const GLOWS = (blue: string, amber: string) =>
-  [
-    `radial-gradient(40% 40% at 30% 75%, ${blue}, transparent 70%)`,
-    `radial-gradient(35% 35% at 75% 80%, ${amber}, transparent 70%)`,
-  ].join(", ");
-
 // The paper covers the top 90% of the hero; the dark layer shows below its torn edge.
 const PAPER_H = "90%";
 
@@ -30,13 +24,7 @@ export default function Hero() {
   return (
     <section ref={ref} id="hero" className="relative z-10 h-svh min-h-[640px] overflow-hidden">
       {/* Dark cinematic layer, revealed by the rip */}
-      <div
-        data-hero-bg
-        aria-hidden="true"
-        className="absolute inset-0"
-        style={{ background: `${GLOWS("var(--color-blue-glow)", "var(--color-amber-glow)")}, linear-gradient(180deg, var(--color-night), var(--color-night-deep))` }}
-      />
-      <div data-hero-bg data-glow-boost aria-hidden="true" className="absolute inset-0 opacity-0" style={{ background: GLOWS("rgba(36,80,240,0.3)", "rgba(242,168,29,0.3)") }} />
+      <div data-hero-bg aria-hidden="true" className="night-blend absolute inset-0" />
       <p data-hero-bg data-websites aria-hidden="true" className="headline absolute inset-x-0 top-[34%] z-[1] text-center text-[clamp(56px,15vw,240px)] whitespace-nowrap text-bone">
         {t.bigWord}
       </p>

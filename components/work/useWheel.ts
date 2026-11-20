@@ -8,6 +8,15 @@ import { useLenis } from "../LenisProvider";
 
 import { DESKTOP_MOTION } from "@/lib/media";
 
+const NUDGE = 0.12; // share of one card step that counts as "I meant to move"
+
+/** Page y of an element's top from layout (offsetTop chain), so transforms don't move it. */
+const layoutTop = (el: HTMLElement) => {
+  let y = 0;
+  for (let e: HTMLElement | null = el; e; e = e.offsetParent as HTMLElement | null) y += e.offsetTop;
+  return y;
+};
+
 /**
  * Pins the Work section and turns the wheel one card per screen of scroll, snapping to cards.
  * Writes `--rot` / `--s` on the cards container; CSS places the cards. Returns goTo(i).
@@ -41,7 +50,10 @@ export function useWheel(rootRef: RefObject<HTMLElement | null>, cardsRef: RefOb
         clearTimeout(snapTimer);
         snapTimer = window.setTimeout(() => {
           if (!self.isActive) return;
-          const i = Math.round(self.progress * (count - 1));
+          // Snap the way the visitor is scrolling: a small nudge moves on to the next card instead of
+          // pulling the one that started to arrive back out of view.
+          const pos = self.progress * (count - 1);
+          const i = self.direction > 0 ? Math.ceil(pos - NUDGE) : Math.floor(pos + NUDGE);
           const y = self.start + ((self.end - self.start) * i) / (count - 1);
           if (Math.abs(window.scrollY - y) > 2) scrollToY(y);
         }, 160);
@@ -50,7 +62,8 @@ export function useWheel(rootRef: RefObject<HTMLElement | null>, cardsRef: RefOb
       const tween = gsap.to(proxy, {
         rot: count - 1,
         ease: "none",
-        scrollTrigger: { trigger: root, start: "top top", end: `+=${(count - 1) * 70}%`, pin: true, scrub: 0.25, onUpdate: snapLater },
+        // Start from the layout position, not the on-screen one: useRip shifts #work with a transform during the rip.
+        scrollTrigger: { trigger: root, start: () => layoutTop(root), end: `+=${(count - 1) * 70}%`, pin: true, scrub: 0.25, onUpdate: snapLater },
         onUpdate: () => {
           cards.style.setProperty("--rot", proxy.rot.toFixed(4));
           const i = Math.round(proxy.rot);
