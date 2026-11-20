@@ -27,6 +27,7 @@ Chosen artboards: "Type system" · "Hero v2" (new fonts + two inks; same progres
   | `night` | `#0B1110` → `#050606` | Dark sections |
   | `bone` | `#EDEBE6` | Text on dark (16:1) |
   | `amber` | `#F2A81D` | Only as a soft glow in dark backgrounds (`rgba(242,168,29,.35)`), next to a deep-blue glow `rgba(36,80,240,.35)` (replaces the old teal glow) |
+- Light only, no dark mode: `color-scheme: only light`, so phone browsers don't auto-darken the page.
 - Rules:
   - One `action` element per screen where possible.
   - Hover on action: darken to `#B81D15` and lift 2px.
@@ -102,7 +103,7 @@ Chosen artboards: "Type system" · "Hero v2" (new fonts + two inks; same progres
      - **10–35% tear starts:** the halves rotate −2° / +1.6° around the top of the rip, so a wedge opens from the bottom.
      - **35–65% split:** left half translate(−150px, −40px) rotate(−8°), right half translate(150px, −40px) rotate(6°). "WEBSITES" scales 1.12 → 1.0 and the blue/amber glows brighten.
      - **65–100% fly-off + handoff:** left half translate(−980px, −260px) rotate(−22°), right half translate(980px, −220px) rotate(18°), plus a small flutter (rotation wobble). The **Work wheel cards swing in along their arc** from below-left (staggered 60ms, ease-out), so the wheel is assembled by the time the paper is gone. The progress ring passes the Work dot.
-   - Mobile / reduced motion: one torn sheet slides up and away, no split.
+   - Phones / upright tablets: a light 2D rip, not pinned: the tear runs up the rip line (fibres drawn as it goes), then the halves part sideways and drift up. No 3D tilt, no throw physics, no re-assembly. Reduced motion: no rip.
 
    **Make it feel like real paper, not cardboard (required):**
    - **The tear grows, it doesn't just appear.** The rip line is revealed progressively from bottom to top: animate how far the cut has travelled, and keep the two halves joined above that point. Real tearing is stick-slip: short fast jumps with tiny pauses. Map scroll progress through a stepped easing (e.g. `CustomEase` with 4–5 small plateaus) instead of a linear one, and line the `rip1/2/3` sounds up with the jumps.
@@ -236,7 +237,7 @@ Design: canvas artboard "C1 · The paper comes back".
 
 ## Languages: EN · FR · AR
 - **next-intl** with locales `en` (default), `fr`, `ar`. Routes: `/en`, `/fr`, `/ar`; `/` redirects.
-- Locale detection order: the saved `NEXT_LOCALE` cookie → the browser's `Accept-Language` → `en`. Never guess the language from the visitor's country; the country only decides the budget ranges in Services.
+- Locale: always `en` by default. `/` goes to the saved `NEXT_LOCALE` cookie (set when the visitor clicks the language switcher), else `/en`. Never use `Accept-Language`, never guess the language from the visitor's country; the country only decides the budget ranges in Services.
 - All copy lives in `messages/en.json`, `messages/fr.json`, `messages/ar.json` (provided, with the same keys in all three). Placeholders in `[BRACKETS]` are still to be filled by the owner, in every language.
 - Switching language: keep the scroll position (scroll to the same section in the new locale), the sound preference and the currency choice.
 - **Fonts per locale:** EN/FR use Big Shoulders Display / Schibsted Grotesk / IBM Plex Mono / the Hand font. AR uses Lalezar / IBM Plex Sans Arabic / Aref Ruqaa (labels stay in IBM Plex Mono when they are Latin, e.g. "2026", "%").

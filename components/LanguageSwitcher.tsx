@@ -7,7 +7,7 @@ const NAMES = { en: "EN", fr: "FR", ar: "ع" } as const;
 
 /**
  * EN · FR · ع. Real links (full page load, so <html lang/dir> and fonts switch); `hash` keeps the visitor
- * in the same section of the new language. next-intl saves the choice in the NEXT_LOCALE cookie.
+ * in the same section of the new language. The click saves the choice in the NEXT_LOCALE cookie (read by proxy.ts on "/").
  */
 export default function LanguageSwitcher({ hash = "", className = "" }: { hash?: string; className?: string }) {
   const locale = useLocale();
@@ -24,6 +24,7 @@ export default function LanguageSwitcher({ hash = "", className = "" }: { hash?:
           <a
             href={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/${l}${hash}`}
             hrefLang={l}
+            onClick={() => (document.cookie = `NEXT_LOCALE=${l}; path=/; max-age=31536000; samesite=lax`)}
             lang={l}
             aria-current={l === locale ? "true" : undefined}
             className={`relative flex min-h-11 min-w-11 items-center justify-center ${

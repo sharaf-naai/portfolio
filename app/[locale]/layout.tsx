@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import { Aref_Ruqaa, Big_Shoulders, IBM_Plex_Mono, IBM_Plex_Sans_Arabic, Lalezar, Nanum_Pen_Script, Schibsted_Grotesk } from "next/font/google";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
@@ -22,7 +22,10 @@ const FONTS = [display, text, mono, hand, arDisplay, arText, arHand].map((f) => 
 // shortcut: set NEXT_PUBLIC_SITE_URL to the real domain once it exists (absolute hreflang / canonical URLs).
 const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
-export const generateStaticParams = () => routing.locales.map((locale) => ({ locale }));
+// Light only: stops phone browsers' automatic dark mode from repainting the paper.
+export const viewport: Viewport = { colorScheme: "only light" };
+
+export const generateStaticParams =() => routing.locales.map((locale) => ({ locale }));
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;

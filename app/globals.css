@@ -29,6 +29,7 @@
 }
 
 :root {
+  color-scheme: only light;
   --role-display: var(--font-big-shoulders), var(--font-lalezar), sans-serif;
   --role-text: var(--font-schibsted), var(--font-plex-arabic), sans-serif;
   /* Latin labels stay in Plex Mono; Arabic glyphs fall through to Plex Sans Arabic. */

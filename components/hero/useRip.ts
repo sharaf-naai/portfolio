@@ -4,7 +4,7 @@ import { useEffect, type RefObject } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
-  backOut, basePose, fiberPoints, flyPose, lerpPose, tipAt,
+  backOut, basePose, fiberPoints, flyPose, lerpPose, stickSlip, tipAt,
   FLY_DURATION, RIP_BOTTOM_PX, RIP_TOP_X, type HalfState, type Side,
 } from "@/lib/rip";
 import { DESKTOP_MOTION, PHONE_MOTION } from "@/lib/media";
@@ -200,11 +200,27 @@ export function useRip(rootRef: RefObject<HTMLElement | null>) {
       };
     });
 
-    // Phones and upright tablets: one torn sheet slides up and away, no split, no pin.
+    // Phones and upright tablets: a light 2D rip, no pin, no 3D, no physics. The tear runs up the rip
+    // line (stick-slip, fibres drawn as it goes), then the halves part sideways and drift up.
     mm.add(PHONE_MOTION, () => {
-      gsap
-        .timeline({ defaults: { ease: "none" }, scrollTrigger: { trigger: root, start: "top top", end: "bottom top", scrub: true } })
-        .to(q("[data-half]"), { yPercent: -70, rotation: -4, duration: 1 }, 0);
+      const fibers = q("[data-fiber]") as Element[];
+      const [left, right] = q("[data-half]");
+      const cut = { v: 0 };
+      const tl = gsap.timeline({ defaults: { ease: "none" }, scrollTrigger: { trigger: root, start: "top top", end: "bottom top", scrub: true } });
+      tl.to(cut, {
+        v: 1,
+        duration: 0.45,
+        onUpdate: () => {
+          const pts = fiberPoints(stickSlip(cut.v));
+          fibers.forEach((f) => f.setAttribute("points", pts));
+        },
+      }, 0)
+        // the wedge opens from the bottom (rotation about the rip top), then the halves part and rise
+        .to(left, { rotation: 3, duration: 0.45 }, 0)
+        .to(right, { rotation: -2.5, duration: 0.45 }, 0)
+        .to(left, { xPercent: -65, yPercent: -45, rotation: 14, duration: 0.6, ease: "power1.in" }, 0.4)
+        .to(right, { xPercent: 65, yPercent: -35, rotation: -11, duration: 0.6, ease: "power1.in" }, 0.45);
+      return () => fibers.forEach((f) => f.setAttribute("points", ""));
     });
 
     return () => mm.revert();

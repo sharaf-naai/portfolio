@@ -7,6 +7,8 @@ const base = process.env.NEXT_PUBLIC_BASE_PATH;
 const nextConfig: NextConfig = {
   // a stray package-lock.json in the home folder would otherwise be taken as the workspace root
   turbopack: { root: process.cwd() },
+  // dev only: lets a phone on the same Wi-Fi load the dev scripts (Next blocks other origins by default)
+  allowedDevOrigins: ["192.168.*.*"],
   ...(base && { output: "export", basePath: base, trailingSlash: true, images: { unoptimized: true } }),
 };
 
