@@ -1,0 +1,34 @@
+3:"$Sreact.fragment"
+4:"/portfolio/_next/static/chunks/3-3jc4cqytds3.js"
+5:"/portfolio/_next/static/chunks/088mjt9ryuvl2.js"
+6:"/portfolio/_next/static/chunks/0b3xkc0cmbzka.js"
+7:I[92349,["$4","$5","$6"],"default"]
+8:I[88559,["$4","$5","$6"],"default"]
+9:I[30398,["$4","$5","$6"],"default"]
+a:I[39467,["$4","$5","$6"],"default"]
+12:"/portfolio/_next/static/chunks/3qfy96eoyh-ek.js"
+13:"ViewportBoundary"
+14:I[97367,["$12"],"$13"]
+15:"MetadataBoundary"
+16:I[97367,["$12"],"$15"]
+17:"$Sreact.suspense"
+18:I[27201,["$12"],"IconMark"]
+b:Tb64,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 45 45" shape-rendering="crispEdges"><path fill="#EDEBE6" d="M0 0h45v45H0z"/><path stroke="#141414" d="M2 2.5h7m3 0h1m2 0h3m1 0h2m1 0h3m1 0h6m4 0h7M2 3.5h1m5 0h1m2 0h3m1 0h2m1 0h2m2 0h2m2 0h2m8 0h1m5 0h1M2 4.5h1m1 0h3m1 0h1m1 0h1m1 0h3m1 0h1m1 0h3m2 0h4m2 0h4m1 0h1m1 0h1m1 0h3m1 0h1M2 5.5h1m1 0h3m1 0h1m1 0h1m3 0h1m1 0h3m2 0h1m1 0h1m1 0h2m1 0h1m1 0h1m1 0h2m2 0h1m1 0h3m1 0h1M2 6.5h1m1 0h3m1 0h1m1 0h3m3 0h1m1 0h3m1 0h1m1 0h1m2 0h3m4 0h1m1 0h1m1 0h3m1 0h1M2 7.5h1m5 0h1m1 0h1m2 0h1m3 0h2m3 0h1m4 0h3m1 0h1m4 0h1m5 0h1M2 8.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M10 9.5h5m1 0h3m4 0h1m2 0h1m1 0h3m2 0h1M2 10.5h1m1 0h5m4 0h3m4 0h3m1 0h3m4 0h1m2 0h1m1 0h5M3 11.5h4m3 0h1m2 0h2m3 0h2m2 0h1m1 0h2m1 0h2m2 0h4m2 0h1m2 0h1M2 12.5h4m2 0h2m2 0h1m3 0h3m2 0h4m1 0h2m1 0h2m1 0h1m1 0h1m1 0h1m1 0h1m3 0h1M2 13.5h1m1 0h1m4 0h1m1 0h1m1 0h2m1 0h2m1 0h4m2 0h2m1 0h4m1 0h3m1 0h1m1 0h1m2 0h1M3 14.5h2m3 0h1m1 0h1m2 0h2m2 0h1m2 0h4m1 0h2m2 0h2m2 0h4m1 0h5M2 15.5h2m2 0h1m2 0h2m1 0h4m1 0h4m6 0h3m1 0h1m2 0h2m1 0h4M2 16.5h1m1 0h2m2 0h4m2 0h2m1 0h1m4 0h2m1 0h2m1 0h3m1 0h4m2 0h3M3 17.5h1m2 0h1m2 0h3m1 0h3m2 0h3m3 0h2m1 0h1m4 0h2m2 0h1m2 0h1M5 18.5h4m2 0h4m2 0h2m1 0h1m2 0h1m1 0h2m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h2M2 19.5h1m1 0h2m1 0h1m1 0h4m1 0h1m1 0h1m3 0h1m1 0h1m1 0h1m1 0h2m1 0h3m4 0h6M3 20.5h1m1 0h1m2 0h1m2 0h2m3 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h2m1 0h2m2 0h1m1 0h2m1 0h1m2 0h1M3 21.5h3m5 0h3m3 0h2m2 0h1m5 0h3m4 0h1m3 0h2M3 22.5h2m3 0h2m5 0h3m2 0h2m1 0h4m1 0h1m3 0h3m3 0h2m2 0h1M2 23.5h1m1 0h1m1 0h2m2 0h1m1 0h3m1 0h4m2 0h1m6 0h1m5 0h1m1 0h6M4 24.5h3m1 0h1m1 0h4m2 0h1m1 0h1m1 0h4m8 0h1m3 0h4M2 25.5h5m3 0h1m3 0h2m2 0h1m2 0h1m1 0h2m1 0h1m2 0h2m3 0h1m4 0h1m1 0h2M2 26.5h1m1 0h2m1 0h3m2 0h3m1 0h3m2 0h1m1 0h5m3 0h3m1 0h1m1 0h3m2 0h1M2 27.5h1m2 0h1m1 0h1m1 0h5m1 0h2m1 0h2m4 0h5m1 0h4m1 0h1m1 0h3M4 28.5h1m1 0h8m1 0h4m2 0h1m1 0h5m1 0h2m1 0h1m1 0h1m1 0h3M2 29.5h1m2 0h2m4 0h2m2 0h3m2 0h2m1 0h1m5 0h2m2 0h3m3 0h1m1 0h2M2 30.5h3m2 0h4m2 0h1m1 0h1m4 0h1m2 0h1m2 0h1m1 0h1m1 0h1m1 0h4m2 0h3m1 0h1M2 31.5h2m2 0h1m2 0h3m2 0h1m1 0h1m1 0h2m2 0h1m1 0h1m1 0h7m4 0h2M2 32.5h1m1 0h1m1 0h1m1 0h1m1 0h2m3 0h1m2 0h1m2 0h1m1 0h2m1 0h1m3 0h1m1 0h1m2 0h2m3 0h3M2 33.5h1m2 0h2m4 0h4m1 0h1m1 0h1m1 0h3m3 0h1m1 0h1m2 0h2m1 0h3m4 0h1M2 34.5h1m2 0h1m2 0h1m8 0h2m1 0h4m2 0h1m1 0h1m1 0h1m2 0h7m2 0h1M10 35.5h3m1 0h6m2 0h3m1 0h2m1 0h3m2 0h1m3 0h3M2 36.5h7m2 0h2m2 0h2m1 0h2m1 0h3m1 0h3m4 0h1m1 0h1m1 0h1m1 0h2m1 0h1M2 37.5h1m5 0h1m1 0h1m1 0h1m1 0h1m2 0h1m1 0h3m1 0h2m4 0h1m1 0h1m1 0h2m3 0h2m1 0h2M2 38.5h1m1 0h3m1 0h1m1 0h2m2 0h3m1 0h1m2 0h3m1 0h1m2 0h1m3 0h1m1 0h6m2 0h1M2 39.5h1m1 0h3m1 0h1m1 0h1m3 0h2m1 0h4m3 0h1m4 0h3m1 0h1m1 0h1m1 0h1m1 0h3M2 40.5h1m1 0h3m1 0h1m1 0h1m1 0h1m2 0h2m5 0h2m1 0h2m2 0h3m2 0h5m2 0h1M2 41.5h1m5 0h1m3 0h2m3 0h1m1 0h1m2 0h6m1 0h1m2 0h1m3 0h1m1 0h1m1 0h2M2 42.5h7m1 0h1m1 0h1m4 0h1m3 0h3m1 0h1m2 0h1m2 0h1m2 0h2m1 0h2"/></svg>
+11:X
+2:[["children",{"s":"__PAGE__","h":128,"d":{"r":["$","$3","c",{"children":[[["$","a",null,{"href":"#contact","className":"sr-only z-[60] rounded-full bg-bone px-4 py-2 font-mono text-xs text-ink uppercase focus:not-sr-only focus:fixed focus:top-4 focus:start-4","children":"Skip to contact"}],["$","main",null,{"children":[["$","$L7",null,{}],["$","$L8",null,{}],["$","$L9",null,{}],["$","$La",null,{"qr":"$b","requestUrl":"https://wa.me/212681679598?text=Hi!%20I'd%20like%20to%20request%20access%20(from%20your%20portfolio)"}],"$Lc"]}],"$Ld"],["$Le"],"$Lf"]}],"p":"$@10","v":null,"s":"$11"}}]]
+1:[["children",{"s":{"n":"locale","t":"d","k":"en","s":[]},"h":48,"c":"$Q2"}]]
+0:{"t":{"t":{"s":"","h":80,"c":"$Q1"},"h":{"r":["$","$3","h",{"children":[null,["$","$L14",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}],["$","meta","2",{"name":"color-scheme","content":"only light"}]]}],["$","$L16",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$17",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Sharaf — Web developer, Morocco"}],["$","meta","1",{"name":"description","content":"Websites, web apps and CRMs, designed and built by Sharaf. Based in Morocco, working with clients anywhere."}],["$","link","2",{"rel":"canonical","href":"https://sharaf-naai.github.io/en/"}],["$","link","3",{"rel":"alternate","hrefLang":"en","href":"https://sharaf-naai.github.io/en/"}],["$","link","4",{"rel":"alternate","hrefLang":"fr","href":"https://sharaf-naai.github.io/fr/"}],["$","link","5",{"rel":"alternate","hrefLang":"ar","href":"https://sharaf-naai.github.io/ar/"}],["$","link","6",{"rel":"alternate","hrefLang":"x-default","href":"https://sharaf-naai.github.io/"}],["$","meta","7",{"property":"og:title","content":"Sharaf — Web developer, Morocco"}],["$","meta","8",{"property":"og:description","content":"Websites, web apps and CRMs, designed and built by Sharaf. Based in Morocco, working with clients anywhere."}],["$","meta","9",{"property":"og:locale","content":"en"}],["$","meta","10",{"property":"og:type","content":"website"}],["$","meta","11",{"name":"twitter:card","content":"summary"}],["$","meta","12",{"name":"twitter:title","content":"Sharaf — Web developer, Morocco"}],["$","meta","13",{"name":"twitter:description","content":"Websites, web apps and CRMs, designed and built by Sharaf. Based in Morocco, working with clients anywhere."}],["$","link","14",{"rel":"icon","href":"/portfolio/icon.png?icon.0nyf32f45bsw3.png","sizes":"256x256","type":"image/png"}],["$","link","15",{"rel":"apple-touch-icon","href":"/portfolio/apple-icon.png?apple-icon.33hbemlsm48i_.png","sizes":"180x180","type":"image/png"}],["$","$L18","16",{}]]}]}],null]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"p":"$@19","v":null,"s":"$11"}},"a":"$@1a","u":"$@1b","b":"-fJRSESPtFefPKzAe3rb3"}
+1c:I[34145,["$4","$5","$6"],"default"]
+1d:I[92602,["$4","$5","$6"],"default"]
+1e:I[97367,["$12"],"OutletBoundary"]
+c:["$","$L1c",null,{}]
+d:["$","$L1d",null,{}]
+e:["$","script","script-0",{"src":"/portfolio/_next/static/chunks/0b3xkc0cmbzka.js","async":true}]
+f:["$","$L1e",null,{"children":["$","$17",null,{"name":"Next.MetadataOutlet","children":"$@1f"}]}]
+1b:true
+1f:null
+11:300
+11:C
+1a:0
+19:"$undefined"
+10:"$undefined"

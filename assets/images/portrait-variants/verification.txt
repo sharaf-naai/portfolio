@@ -1,0 +1,8 @@
+Source: ink-caricature-1024-v3.png
+Six white-background PNGs, 1024x1024, only black/white pixels.
+Empty eyes + pupils reconstruction differences: 0 pixels
+No strand + strand reconstruction differences: 0 pixels
+Closed eyes differences outside eyes/brows: 0 pixels
+Half closed differences outside eyes: 0 pixels
+Closed eyebrows translated vertically by 6 pixels, shape unchanged.
+Pupils remain at original coordinates in the half-closed version.
