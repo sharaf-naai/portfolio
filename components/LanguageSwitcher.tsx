@@ -22,7 +22,7 @@ export default function LanguageSwitcher({ hash = "", className = "" }: { hash?:
             </span>
           )}
           <a
-            href={`/${l}${hash}`}
+            href={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/${l}${hash}`}
             hrefLang={l}
             lang={l}
             aria-current={l === locale ? "true" : undefined}

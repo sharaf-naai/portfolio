@@ -83,7 +83,7 @@ export default function AccessCard({ qr, requestUrl }: { qr: string; requestUrl:
                       </div>
                     </div>
                     <div className="relative aspect-[150/180] w-[clamp(84px,20%,150px)] shrink-0 self-start overflow-hidden rounded-[10px] badge:order-first badge:w-[46%]">
-                      <Image src="/assets/images/icon.jpg" alt={t.photoAlt} fill sizes="(max-width: 767px) 46vw, 150px" className="object-cover grayscale" />
+                      <Image src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/assets/images/icon.jpg`} alt={t.photoAlt} fill sizes="(max-width: 767px) 46vw, 150px" className="object-cover grayscale" />
                     </div>
                   </div>
 

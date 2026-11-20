@@ -50,9 +50,6 @@ export default function Hero() {
         </div>
 
         <div className="mt-3.5 flex items-end gap-2">
-          <svg aria-hidden="true" width="34" height="46" viewBox="0 0 34 46" fill="none" stroke="var(--color-pen)" strokeWidth="2" strokeLinecap="round" className="rtl:-scale-x-100">
-            <path d="M28 42 C6 40 4 22 10 4 M4 12 L10 3 L16 11" />
-          </svg>
           <span data-note className="inline-block -rotate-4 font-hand text-[clamp(32px,10vw,40px)] leading-none text-balance text-pen">
             {t.note}
           </span>

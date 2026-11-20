@@ -1,4 +1,4 @@
-const SRC = "/assets/images/portrait-variants/";
+const SRC = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/assets/images/portrait-variants/`;
 const layer = "absolute inset-0 size-full select-none";
 const MASK = `url(${SRC}eyes-mask.png)`;
 
