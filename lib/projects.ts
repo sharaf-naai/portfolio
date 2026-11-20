@@ -4,7 +4,7 @@
  */
 export const PROJECT_URLS: (string | null)[] = [
   null, // Restaurant site: [URL]
-  null, // Hanabaly: [URL]
+  null, // Online store: [URL]
   null, // Booking engine: [URL]
   null, // Car rental CRM: [URL]
 ];

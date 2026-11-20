@@ -46,12 +46,12 @@
         "for": "Restaurants",
         "stack": "Next.js · React"
       },
-      "hanabaly": {
-        "name": "Hanabaly",
-        "kind": "Client réel",
-        "summary": "Une plateforme de prise de rendez-vous pour médecins et psychologues.",
-        "type": "Application web · vrai client",
-        "for": "Médecins, psychologues",
+      "store": {
+        "name": "Boutique en ligne",
+        "kind": "Concept",
+        "summary": "Pages produits, panier et commandes en paiement à la livraison, pour une petite boutique.",
+        "type": "Site web · concept",
+        "for": "Petites boutiques, marques",
         "stack": "Next.js · React"
       },
       "booking": {
@@ -146,7 +146,8 @@
     "fields": {
       "experience": "Expérience",
       "experienceValue": "4+ ans",
-      "client": "Client réel",
+      "builds": "Je crée",
+      "buildsValue": "Sites · Applis web · CRM",
       "stack": "Stack",
       "studies": "Études",
       "studiesValue": "Licence en informatique"

@@ -24,7 +24,7 @@ export default function AccessCard({ qr, requestUrl }: { qr: string; requestUrl:
   const letters = useLocale() === "ar" ? [NAME] : [...NAME];
   const details = [
     [t.fields.experience, t.fields.experienceValue],
-    [t.fields.client, "Hanabaly"],
+    [t.fields.builds, t.fields.buildsValue],
     [t.fields.stack, "Next.js / React / GSAP"],
     [t.fields.studies, t.fields.studiesValue],
   ];

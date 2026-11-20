@@ -11,7 +11,7 @@ import { useWheel } from "./useWheel";
 import { DESKTOP_MOTION } from "@/lib/media";
 
 // Same order as the cards; the last one, "Your project", opens WhatsApp.
-const IDS = ["restaurant", "hanabaly", "booking", "carRental", "yours"] as const;
+const IDS = ["restaurant", "store", "booking", "carRental", "yours"] as const;
 const CTA = IDS.length - 1;
 const PILL = "btn inline-flex min-h-11 items-center rounded-full px-5";
 
@@ -31,7 +31,7 @@ const THEMES = {
   },
 };
 
-// Media per project, same order as messages.work.projects. Add video/poster paths (e.g. /assets/videos/hanabaly.mp4) when recorded.
+// Media per project, same order as messages.work.projects. Add video/poster paths (e.g. /assets/videos/store.mp4) when recorded.
 const MEDIA: { theme: keyof typeof THEMES; shot: string; video?: string; poster?: string }[] = [
   { theme: "paper", shot: "linear-gradient(135deg,#B5482E,#2A120C)" },
   { theme: "ink", shot: "linear-gradient(135deg,#2E5E5A,#0E1414)" },

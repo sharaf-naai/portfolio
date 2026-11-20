@@ -138,7 +138,7 @@ Chosen artboards: "Type system" · "Hero v2" (new fonts + two inks; same progres
    - The active card (closest to 0°): full brightness, 3px bone outline, `action` red "▶ PLAYING" chip, autoplaying muted looped `<video>` with a thin progress line. The other cards: `brightness(.62)`, video paused. Hovering any card plays its video.
    - Card colors rotate between paper, ink and blue pen (`pen`); red stays reserved for the PLAYING chip. Each card has a browser chrome bar, a big number, the name, "kind · year", and the video.
    - Left panel shows the active project: section label, a big outlined number, the title, one sentence, a details table, a **"Visit site ↗"** pill, and the project list with the active one marked in `pen` blue.
-   - Projects: 01 Restaurant site (concept) · 02 Hanabaly (real client: appointment platform for doctors and psychologists) · 03 Booking / WhatsApp engine (concept) · 04 Car rental CRM (concept) · 05 "Your project" (an empty dashed card, the call to action).
+   - Projects: 01 Restaurant site (concept) · 02 Online store (concept: product pages, cart, cash-on-delivery orders) · 03 Booking / WhatsApp engine (concept) · 04 Car rental CRM (concept) · 05 "Your project" (an empty dashed card, the call to action). All projects are concepts: no real clients on the site for now (owner decision, Nov 2026).
    - After card 05 the pin releases and the page scrolls on normally.
    - **Clicking a card (or "Visit site ↗") opens that project's live site in a new tab.** Use `target="_blank" rel="noopener noreferrer"`. The custom cursor over a card reads "Visit ↗". There is no in-site project page. Each project's URL lives in `lib/projects.ts`.
    - A project without a live link yet (e.g. a concept not deployed): the card isn't clickable, and its chip says "Coming soon" instead of "▶ PLAYING".
@@ -182,7 +182,7 @@ Design: canvas artboard "I4 · Dark access card". This **replaces** the passport
 
 **Back**
 - Same black: a full-width black stripe near the top, then two columns.
-  - Left: Experience [YEARS] · Real client Hanabaly · Stack Next.js/React/GSAP · Studies [SCHOOL].
+  - Left: Experience [YEARS] · Builds (Websites · Web apps · CRMs) · Stack Next.js/React/GSAP · Studies [SCHOOL].
   - Right: a 120px QR code that opens WhatsApp (generate a real QR from the `wa.me` link at build time).
 - The 4 process steps in a row: 01 Call · 02 Design · 03 Build · 04 Launch.
 - Bottom: a bone **"Request access"** pill (WhatsApp icon) → opens WhatsApp with the message prefilled: "Hi! I'd like to request access 👋 (from your portfolio)". Next to it, an outline "↻ flip back" pill that slides the knob back.
@@ -250,7 +250,7 @@ Design: canvas artboard "C1 · The paper comes back".
     - the swipe-to-flip knob (slides right → left)
     - the Services receipt (on the left)
     - the order of the passport-style fields on the card
-  - **Don't mirror:** the ink portrait, photos, videos and screenshots, numbers, brand names (Hanabaly, WhatsApp, Next.js), the paper texture, the direction the paper rips.
+  - **Don't mirror:** the ink portrait, photos, videos and screenshots, numbers, brand names (WhatsApp, Next.js), the paper texture, the direction the paper rips.
   - **Hero name in Arabic:** there is no "O" to replace, so the ink portrait sits right before the name, at the same height ("[face] اسمك"). The loader's face still flies into that spot.
   - Use Western digits (0–9) in every language, including prices, % and time.
 - WhatsApp prefilled messages come from the messages files, so a French visitor sends a French message.

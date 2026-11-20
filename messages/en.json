@@ -46,12 +46,12 @@
         "for": "Restaurants",
         "stack": "Next.js · React"
       },
-      "hanabaly": {
-        "name": "Hanabaly",
-        "kind": "Real client",
-        "summary": "An appointment platform for doctors and psychologists.",
-        "type": "Web app · real client",
-        "for": "Doctors, psychologists",
+      "store": {
+        "name": "Online store",
+        "kind": "Concept",
+        "summary": "Product pages, cart and cash-on-delivery orders, built for a small shop.",
+        "type": "Website · concept",
+        "for": "Small shops, brands",
         "stack": "Next.js · React"
       },
       "booking": {
@@ -146,7 +146,8 @@
     "fields": {
       "experience": "Experience",
       "experienceValue": "4+ years",
-      "client": "Real client",
+      "builds": "Builds",
+      "buildsValue": "Websites · Web apps · CRMs",
       "stack": "Stack",
       "studies": "Studies",
       "studiesValue": "Bachelor's, computer science"
