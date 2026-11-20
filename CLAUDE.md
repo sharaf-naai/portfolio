@@ -6,6 +6,18 @@ Clients come from friends' referrals. Awwwards-level motion, but it must stay fa
 Design reference canvas: https://claude.ai/artifact/3bQyVR8fsEcASw37sBVkUE
 Chosen artboards: "Type system" · "Hero v2" (new fonts + two inks; same progress ring + pencil sound button as "Hero — FINAL controls") · "Pencil · Hero thumbnails" (what sits at the bottom of the hero paper) · LD1 (loader) · Rip storyboard · Work (wheel) · S5 v2 (services brief) · I4 (about card) · C1 (contact). Everything else on the canvas is an unused option. There is **no project page**: project cards open the live site in a new tab.
 
+## Where the build stands (Nov 2026)
+The sections below are the full design. Where the site deliberately differs from it, this list wins:
+- **No sound at all.** Howler, the sound button and every sound trigger were removed. Sound notes below are parked: don't add any back unless the owner asks.
+- **Not built yet:** the loader (00, LD1) and the pencil thumbnails at the bottom of the hero.
+- **Hero portrait:** stacked PNG frames in `public/assets/images/portrait-variants/` (`components/hero/Face.tsx`, blinking and pupils in `useFace`), not an SVG.
+- **Hero note:** "ok, scroll and rip it" has no arrow.
+- **Phones get a light 2D rip** (see 5. Rip transition).
+- **Work:** the whole section takes on the active card's colours (paper / ink / pen) in wheel mode. All 4 projects are concepts.
+- **About card is not pinned:** it scrolls normally, and the knob hint plays once when the card comes into view.
+- **Desktop vs phone** is one rule in `lib/media.ts`: the desktop experience (3D rip, pinned wheel) needs a wide, landscape, tall-enough screen. Everything else gets the phone version.
+- **Light only:** no dark mode.
+
 ## Stack
 - Next.js (App Router, TypeScript), Tailwind CSS
 - GSAP + ScrollTrigger (all GSAP plugins are free now, DrawSVG included)
@@ -59,7 +71,7 @@ Chosen artboards: "Type system" · "Hero v2" (new fonts + two inks; same progres
 3. **Hero (static)**
    - Small line "DEVELOPER / BUILDER … 2026" above the name.
    - The name is huge in the Display font (Big Shoulders Display 900). The **O is replaced by an inline SVG ink portrait** sized at about 1.08em.
-   - Under it: a blue-pen (`pen`) handwritten Hand font note "ok, scroll and rip it" with a hand-drawn arrow, (no ornaments under it).
+   - Under it: a blue-pen (`pen`) handwritten Hand font note "ok, scroll and rip it" (no arrow, no ornaments under it).
    - The bottom of the paper has a torn edge (clip-path polygon). The dark cinematic layer sits underneath, with a big "WEBSITES" word.
    - **Bottom of the paper: pencil thumbnail sketches of this hero** (canvas artboard "Pencil · Hero thumbnails"). This replaces the old project polaroids; nothing here refers to the projects.
      - Four tiny wireframes of the hero, drawn in **graphite pencil** (`graphite` #57534D-ish, 1.8px strokes with a light SVG `feTurbulence` + `feDisplacementMap` grain so they look like real pencil, not vector lines). Each one shows: a box, a short line for the name, 2 thick lines for text, and a zig-zag torn edge near its bottom.
@@ -68,9 +80,9 @@ Chosen artboards: "Type system" · "Hero v2" (new fonts + two inks; same progres
      - A pencil arrow curves down toward the torn edge with the note "rip here?".
      - All of it sits between the name block and the torn edge, never overlapping the name.
      - **Motion:** right after the loader's face lands in the O, the sketches **draw themselves** one by one (DrawSVG, ~0.25s per thumbnail, slightly irregular timing), then the crosses, then the blue circle and labels. Play the `pencil` sound while they draw (only if sound is on). They're drawn on the paper, so during the rip they tear and fly away with the paper halves (the split line runs through them).
-   - Use the placeholder portrait SVG until the real stroke-based SVG arrives.
+   - The portrait is the PNG frame stack in `Face.tsx` (it blinks and its pupils move). A stroke-based SVG would only be needed for the loader's draw-on.
    - There is **no top navigation**. The page opens on the paper and the name.
-4. **Navigation = a round progress ring + a pencil sound button** (canvas artboard "Hero — FINAL controls")
+4. **Navigation = a round progress ring + the language switcher** (canvas artboard "Hero — FINAL controls"; its sound button was removed)
    - Hide the native scrollbar (`scrollbar-width: none` + `::-webkit-scrollbar { display: none }`). There is no menu.
    - **Progress ring:** fixed in the **bottom-right corner** (28px from the edges).
      - A 76px dark circle `rgba(12,12,12,.88)` with a soft shadow, so it reads on both the paper and the dark sections.
@@ -82,7 +94,7 @@ Chosen artboards: "Type system" · "Hero v2" (new fonts + two inks; same progres
      - The `tick` sound plays on click.
      - It stays hidden during the loader and fades and scales in when the hero appears.
      - **Accessibility:** it's a real `<button>` whose `aria-label` updates ("Scroll progress 37%. Go to next part" / "Back to top"). Add a visible-on-focus "Skip to contact" link.
-   - **Sound button:** in the **hero's top-right corner**, positioned `absolute` inside the hero (**not fixed**: it scrolls away with the hero and doesn't follow the page). A 64px **hand-drawn pencil speaker** in graphite grey `#4A4A4A`, drawn with a double sketchy stroke.
+   - **Sound button (removed, parked; kept here for reference only):** in the **hero's top-right corner**, positioned `absolute` inside the hero (**not fixed**: it scrolls away with the hero and doesn't follow the page). A 64px **hand-drawn pencil speaker** in graphite grey `#4A4A4A`, drawn with a double sketchy stroke.
      - **On:** 3 sound-wave arcs.
      - **Off (default):** the waves are replaced by a scribbled ✕ in `pen` blue.
      - **Click:** the new state draws itself with DrawSVG (~0.35s), with a tiny pencil-scratch sound when turning on.
@@ -90,11 +102,12 @@ Chosen artboards: "Type system" · "Hero v2" (new fonts + two inks; same progres
      - The choice is saved in `localStorage`.
      - It is a `<button aria-pressed>` with the label "Turn sound on" / "Mute sound".
      - It lives on the paper, so it always uses the paper colours.
-   - **Language switcher:** right next to the sound button, to its left, also `absolute` inside the hero (not fixed). Canvas artboards "Hero v2" (EN), "Hero v2 — FR" and "Hero v2 — AR".
+   - **Language switcher:** in the **hero's top-right corner**, `absolute` inside the hero (not fixed): it scrolls away with the hero and fades out as the rip starts. Canvas artboards "Hero v2" (EN), "Hero v2 — FR" and "Hero v2 — AR".
      - `EN · FR · ع`: IBM Plex Mono 13px for EN/FR, Lalezar 18px for ع, separated by `·` in graphite.
      - The current language is in `ink`, weight 600, with a hand-drawn `pen`-blue underline. The others are in `graphite`.
      - Each one is a real link (`<a href="/fr" hreflang="fr">`) with `aria-current="true"` on the active one, a 44px tap target, and the nav labelled "Language".
-     - In Arabic, the switcher and the sound button move to the **top-left** corner (mirrored).
+     - Clicking a language saves it in the `NEXT_LOCALE` cookie (see "Languages").
+     - In Arabic, the switcher moves to the **top-left** corner (mirrored).
 5. **Rip transition** (storyboard: canvas row "Paper rip", frames 1–4)
    - Scrubbed by scroll, never a one-shot, and fully reversible. The hero pins for about 120vh while the rip plays.
    - Build: render the paper layer **twice**. Clip each copy along the same jagged rip line (left half / right half, `clip-path: polygon`; rip runs from bottom to top around x ≈ 60%). Add a 6–7px white rough stroke along the rip (SVG polyline) for the paper fibers; each half shows its side of it. `transform-origin` sits at the top of the rip line; add a drop-shadow on both halves.
@@ -117,7 +130,8 @@ Chosen artboards: "Type system" · "Hero v2" (new fonts + two inks; same progres
    - **Reverse:** scrolling back above ~55% plays a quick (~0.6s) re-assembly animation, the halves flying back and snapping together with a small overshoot. After that the tear becomes scrubbed again.
    - **Paper bend (upgrade path):** if the DOM version still looks stiff, swap the paper layer for a React Three Fiber plane (paper rendered to a texture, mesh subdivided ~40×40) and curl the corners and edges in a vertex shader as the halves fly, so the paper bends instead of staying flat. Keep the paper layer behind one `<RipPaper>` component so this swap doesn't touch the rest of the page.
 
-### Sound (Howler.js)
+### Sound (Howler.js): removed, parked
+**Not in the site.** Everything in this section is for reference only, in case the owner brings sound back.
 - Off by default; turned on with the hand-drawn pencil speaker button in the top-right corner. Start the audio context only after that click (browser autoplay rules). Mute when `document.hidden`. Project videos are always muted.
 - One audio sprite (webm + mp3 fallback), under 200 KB, low master volume (~0.35).
 - Sounds:
@@ -195,13 +209,13 @@ Design: canvas artboard "I4 · Dark access card". This **replaces** the passport
 - Faces: `transform-style: preserve-3d`; both faces `backface-visibility: hidden`; the back is pre-rotated 180°.
 - **Accessibility:** the knob is a real `<button aria-label="Flip the card">`. Enter/Space flips it, and the arrow keys move the knob. `aria-live` announces "Back of card" / "Front of card". With `prefers-reduced-motion`, flipping is a simple cross-fade.
 
-**Scroll motion (pinned ~80vh)**
+**Scroll motion (not pinned: the section scrolls normally)**
 - The card rises from below, rotating from `rotateX(25deg)` to flat, and the hologram shimmer sweeps once.
 - The name's raised letters light up left to right.
-- Halfway through the pin, if the visitor hasn't swiped yet, the knob nudges right by 12px twice as a hint.
+- Once the card is in view, if the visitor hasn't swiped yet, the knob nudges right by 12px twice as a hint.
 
 **Mobile:** card width 92vw with the same ratio. The swipe works with the thumb. The back's two columns stack (details, then QR).
-**Sounds:** add `cardFlip` (a short card whoosh + soft click) to the sprite; the `stamp` sound is no longer needed.
+**Sounds (parked):** `cardFlip` (a short card whoosh + soft click), only if sound comes back.
 
 ## 00 Loader: the ink face draws itself (LD1)
 Design: canvas artboard "LD1 · Ink face draws itself".
@@ -237,9 +251,9 @@ Design: canvas artboard "C1 · The paper comes back".
 
 ## Languages: EN · FR · AR
 - **next-intl** with locales `en` (default), `fr`, `ar`. Routes: `/en`, `/fr`, `/ar`; `/` redirects.
-- Locale: always `en` by default. `/` goes to the saved `NEXT_LOCALE` cookie (set when the visitor clicks the language switcher), else `/en`. Never use `Accept-Language`, never guess the language from the visitor's country; the country only decides the budget ranges in Services.
+- Locale: always `en` by default. `/` goes to the saved `NEXT_LOCALE` cookie (set when the visitor clicks the language switcher), else `/en`. Never use `Accept-Language`, never guess the language from the visitor's country; the country only picks the default budget currency in Services.
 - All copy lives in `messages/en.json`, `messages/fr.json`, `messages/ar.json` (provided, with the same keys in all three). Placeholders in `[BRACKETS]` are still to be filled by the owner, in every language.
-- Switching language: keep the scroll position (scroll to the same section in the new locale), the sound preference and the currency choice.
+- Switching language: keep the scroll position (scroll to the same section in the new locale) and the currency choice.
 - **Fonts per locale:** EN/FR use Big Shoulders Display / Schibsted Grotesk / IBM Plex Mono / the Hand font. AR uses Lalezar / IBM Plex Sans Arabic / Aref Ruqaa (labels stay in IBM Plex Mono when they are Latin, e.g. "2026", "%").
 - **Arabic = right to left:** `<html lang="ar" dir="rtl">`. Use logical CSS everywhere (`ms-*`/`me-*`, `ps-*`/`pe-*`, `start-*`/`end-*`, `inset-inline-*`) plus Tailwind `rtl:` variants where needed.
   - **Mirror:**
@@ -255,6 +269,16 @@ Design: canvas artboard "C1 · The paper comes back".
   - Use Western digits (0–9) in every language, including prices, % and time.
 - WhatsApp prefilled messages come from the messages files, so a French visitor sends a French message.
 - SEO: localized `<title>` and description per locale (`meta` in the messages files), `hreflang` alternates for en/fr/ar plus `x-default`, and a localized Open Graph image.
+
+## Hosting
+- **Main target: Vercel** (`proxy.ts` handles the locale redirect and the `x-vercel-ip-country` cookie).
+- **Temporary preview: GitHub Pages** at https://sharaf-naai.github.io/portfolio/, served from the `gh-pages` branch.
+  - Build: setting `NEXT_PUBLIC_BASE_PATH=/portfolio` turns on a static export under that sub-path (`next.config.ts`). Raw asset and link paths (`Face.tsx`, `AccessCard.tsx`, `LanguageSwitcher.tsx`) add that prefix themselves.
+  - `proxy.ts` can't run in a static export, so it is moved aside for that build.
+  - `out/index.html` is a tiny redirect that reads `NEXT_LOCALE`, else goes to `/en/`.
+  - Pages has no country cookie, so the budget currency doesn't follow the visitor's country.
+  - It is deployed by hand. Only push or redeploy when the owner asks.
+- Dev on a phone: `npm run dev -- -H 0.0.0.0`, then open the PC's local IP on port 3000 (`allowedDevOrigins` allows `192.168.*.*`).
 
 ## Rules
 - Never invent testimonials, awards or client numbers. Leave placeholders like [YEAR], [STACK], [PRICE] until the owner gives real values.
