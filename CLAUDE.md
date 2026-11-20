@@ -11,6 +11,7 @@ The sections below are the full design. Where the site deliberately differs from
 - **No sound at all.** Howler, the sound button and every sound trigger were removed. Sound notes below are parked: don't add any back unless the owner asks.
 - **Not built yet:** the loader (00, LD1) and the pencil thumbnails at the bottom of the hero.
 - **Hero portrait:** stacked PNG frames in `public/assets/images/portrait-variants/` (`components/hero/Face.tsx`, blinking and pupils in `useFace`), not an SVG.
+- **Tab icon = the face logo:** `app/icon.png` (256px, transparent) and `app/apple-icon.png` (180px, on `paper`). Both are made from the same portrait frames (face + pupils + curl), so rebuild them if the portrait changes.
 - **Hero note:** "ok, scroll and rip it" has no arrow.
 - **Phones get a light 2D rip** (see 5. Rip transition).
 - **Work:** the whole section takes on the active card's colours (paper / ink / pen) in wheel mode. All 4 projects are concepts.
